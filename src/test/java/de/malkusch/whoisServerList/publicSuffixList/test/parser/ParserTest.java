@@ -9,6 +9,8 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.malkusch.whoisServerList.publicSuffixList.PublicSuffixList;
+import de.malkusch.whoisServerList.publicSuffixList.PublicSuffixListFactory;
 import de.malkusch.whoisServerList.publicSuffixList.parser.Parser;
 import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
 
@@ -26,8 +28,9 @@ public class ParserTest {
 		String[] expected = {"ac", "com.ac", "edu.ac", "*.er", "hk", "教育.hk", "敎育.hk", "政府.hk",
 				"za.net", "za.org"};
 
+		PublicSuffixList psl = new PublicSuffixListFactory().build();
 		InputStream stream = getClass().getResourceAsStream("/test.dat");
-		List<Rule> rules = parser.parse(stream);
+		List<Rule> rules = parser.parse(stream, psl.getCharset());
 		for (int i = 0; i < rules.size(); i++) {
 			assertEquals(expected[i], rules.get(i).toString());
 			

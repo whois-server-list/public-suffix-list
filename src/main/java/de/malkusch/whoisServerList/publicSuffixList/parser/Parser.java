@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -25,9 +26,9 @@ public class Parser {
 	/**
 	 * Parses all rules from a stream.
 	 */
-	public List<Rule> parse(InputStream stream) throws IOException {
+	public List<Rule> parse(InputStream stream, Charset charset) throws IOException {
 		List<Rule> rules = new ArrayList<>();
-		BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(stream, charset));
 		
 		String line;
 		while((line = reader.readLine()) != null) {

@@ -1,24 +1,97 @@
 package de.malkusch.whoisServerList.publicSuffixList;
 
-import java.io.IOException;
 import java.net.URL;
-import java.util.Properties;
+import java.nio.charset.Charset;
+
+import de.malkusch.whoisServerList.publicSuffixList.exception.SuffixDomainException;
+import de.malkusch.whoisServerList.publicSuffixList.util.DomainUtil;
 
 /**
  * @author markus@malkusch.de
  * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
+ * @see PublicSuffixListFactory
  */
 public class PublicSuffixList {
-
+	
 	private URL url;
 	
-	private Properties properties;
+	private Charset charset;
 	
-	public PublicSuffixList() throws IOException {
-		properties = new Properties();
-		properties.load(getClass().getResourceAsStream("/psl.properties"));
+	/**
+	 * @see PublicSuffixListFactory#build()
+	 */
+	protected PublicSuffixList(URL url, Charset charset) {
+		this.url = url;
+		this.charset = charset;
+	}
+	
+	/**
+	 * Gets the registrable domain.
+	 * 
+	 * @throws SuffixDomainException The domain is already a public suffix
+	 */
+	public String getRegistrableDomain(String domain) throws SuffixDomainException {
+		if (domain == null) {
+			return null;
+			
+		}
+		domain = DomainUtil.normalize(domain);
 		
-		url = new URL(properties.getProperty("psl.url"));
+		//TODO
+		return null;
+	}
+	
+	/**
+	 * Returns whether a domain is registrable.
+	 */
+	public boolean isRegistrable(String domain) {
+		if (domain == null) {
+			throw new NullPointerException();
+			
+		}
+		domain = DomainUtil.normalize(domain);
+		
+		//TODO
+		return false;
+	}
+	
+	/**
+	 * Returns the public suffix from a domain.
+	 * 
+	 * If the domain is already a public suffix, it will be returned unchanged.
+	 */
+	public String getPublicSuffix(String domain) {
+		if (domain == null) {
+			throw new NullPointerException();
+			
+		}
+		domain = DomainUtil.normalize(domain);
+		
+		//TODO
+		return null;
+	}
+	
+	/**
+	 * Returns whether a domain is a public suffix or not.
+	 * 
+	 * Example: "com" is a public suffix, "example.com" isn't. 
+	 */
+	public boolean isPublicSuffix(String domain) {
+		if (domain == null) {
+			throw new NullPointerException();
+			
+		}
+		domain = DomainUtil.normalize(domain);
+		
+		//TODO
+		return false;
+	}
+	
+	/**
+	 * Returns the charset of the public suffix list
+	 */
+	public Charset getCharset() {
+		return charset;
 	}
 	
 	/**
