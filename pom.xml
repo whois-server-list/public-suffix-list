@@ -65,7 +65,7 @@
 							<goal>wget</goal>
 						</goals>
 						<configuration>
-							<url>${psl.uri}</url>
+							<url>${psl.url}</url>
 							<outputDirectory>${project.build.outputDirectory}</outputDirectory>
 						</configuration>
 					</execution>
