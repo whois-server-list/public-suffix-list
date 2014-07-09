@@ -1,0 +1,76 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>de.malkusch.whois-server-list</groupId>
+	<artifactId>public-suffix-list</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Public Suffix List</name>
+	<description>Public Suffix List API</description>
+
+	<parent>
+		<groupId>de.malkusch.parent</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>1.7</version>
+	</parent>
+
+	<url>https://github.com/whois-server-list/${project.artifactId}</url>
+
+	<scm>
+		<connection>scm:git:git://github.com/whois-server-list/${project.artifactId}.git</connection>
+		<developerConnection>scm:git:git@github.com:whois-server-list/${project.artifactId}.git</developerConnection>
+		<url>https://github.com/whois-server-list/${project.artifactId}</url>
+	</scm>
+
+	<issueManagement>
+		<system>github</system>
+		<url>https://github.com/whois-server-list/${project.artifactId}/issues</url>
+	</issueManagement>
+
+	<distributionManagement>
+		<site>
+			<id>github</id>
+			<name>Github</name>
+			<url>http://whois-server-list.github.io/${project.artifactId}/</url>
+		</site>
+	</distributionManagement>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>properties-maven-plugin</artifactId>
+				<version>1.0-alpha-2</version>
+				<executions>
+					<execution>
+						<phase>initialize</phase>
+						<goals>
+							<goal>read-project-properties</goal>
+						</goals>
+						<configuration>
+							<files>
+								<file>src/main/resources/psl.properties</file>
+							</files>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.googlecode.maven-download-plugin</groupId>
+				<artifactId>download-maven-plugin</artifactId>
+				<version>1.2.0</version>
+				<executions>
+					<execution>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>wget</goal>
+						</goals>
+						<configuration>
+							<url>${psl.uri}</url>
+							<outputDirectory>${project.build.outputDirectory}</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
