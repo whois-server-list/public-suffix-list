@@ -4,7 +4,6 @@ import java.net.URL;
 import java.nio.charset.Charset;
 
 import de.malkusch.whoisServerList.publicSuffixList.exception.SuffixDomainException;
-import de.malkusch.whoisServerList.publicSuffixList.util.DomainUtil;
 
 /**
  * @author markus@malkusch.de
@@ -35,7 +34,6 @@ public class PublicSuffixList {
 			return null;
 			
 		}
-		domain = DomainUtil.normalize(domain);
 		
 		//TODO
 		return null;
@@ -49,7 +47,6 @@ public class PublicSuffixList {
 			throw new NullPointerException();
 			
 		}
-		domain = DomainUtil.normalize(domain);
 		
 		//TODO
 		return false;
@@ -65,7 +62,6 @@ public class PublicSuffixList {
 			throw new NullPointerException();
 			
 		}
-		domain = DomainUtil.normalize(domain);
 		
 		//TODO
 		return null;
@@ -81,7 +77,6 @@ public class PublicSuffixList {
 			throw new NullPointerException();
 			
 		}
-		domain = DomainUtil.normalize(domain);
 		
 		//TODO
 		return false;

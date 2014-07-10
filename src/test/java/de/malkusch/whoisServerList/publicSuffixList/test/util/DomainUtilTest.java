@@ -9,24 +9,25 @@ import de.malkusch.whoisServerList.publicSuffixList.util.DomainUtil;
 public class DomainUtilTest {
 	
 	@Test
-	public void testSplit() {
-		assertNull(DomainUtil.split(null));
+	public void testJoinLabels() {
+		assertNull(DomainUtil.joinLabels((String[]) null));
 		
-		assertArrayEquals(new String[]{}, DomainUtil.split(""));
-		assertArrayEquals(new String[]{"net"}, DomainUtil.split("net"));
-		assertArrayEquals(new String[]{"example", "net"}, DomainUtil.split("example.net"));
-		assertArrayEquals(new String[]{"www", "example", "net"}, DomainUtil.split("www.example.net"));
-		assertArrayEquals(new String[]{"example", "قطر"}, DomainUtil.split("example.قطر"));
+		assertEquals("", DomainUtil.joinLabels(new String[]{}));
+		assertEquals("net", DomainUtil.joinLabels(new String[]{"net"}));
+		assertEquals("example.net", DomainUtil.joinLabels(new String[]{"example", "net"}));
+		assertEquals("www.example.net", DomainUtil.joinLabels(new String[]{"www", "example", "net"}));
+		assertEquals("example.قطر", DomainUtil.joinLabels(new String[]{"example", "قطر"}));
 	}
-
+	
 	@Test
-	public void testNormalize() {
-		assertNull(DomainUtil.normalize(null));
+	public void testSplitLabels() {
+		assertNull(DomainUtil.splitLabels(null));
 		
-		assertEquals("example.net", DomainUtil.normalize("Example.net"));
-		assertEquals("example.net", DomainUtil.normalize("example.net"));
-		assertEquals("example.قطر", DomainUtil.normalize("example.قطر"));
-		assertEquals("example.قطر", DomainUtil.normalize("Example.قطر"));
+		assertArrayEquals(new String[]{}, DomainUtil.splitLabels(""));
+		assertArrayEquals(new String[]{"net"}, DomainUtil.splitLabels("net"));
+		assertArrayEquals(new String[]{"example", "net"}, DomainUtil.splitLabels("example.net"));
+		assertArrayEquals(new String[]{"www", "example", "net"}, DomainUtil.splitLabels("www.example.net"));
+		assertArrayEquals(new String[]{"example", "قطر"}, DomainUtil.splitLabels("example.قطر"));
 	}
 
 }
