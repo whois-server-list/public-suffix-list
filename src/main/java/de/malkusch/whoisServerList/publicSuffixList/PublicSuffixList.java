@@ -3,6 +3,8 @@ package de.malkusch.whoisServerList.publicSuffixList;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -26,7 +28,7 @@ import de.malkusch.whoisServerList.publicSuffixList.util.PunnycodeAutoDecoder;
  * @see <a href="https://publicsuffix.org/">https://publicsuffix.org/</a>
  * @see PublicSuffixListFactory
  */
-public class PublicSuffixList {
+public class PublicSuffixList implements Iterable<Rule> {
 	
 	private URL url;
 	
@@ -145,6 +147,18 @@ public class PublicSuffixList {
 	 */
 	public URL getURL() {
 		return url;
+	}
+	
+	/**
+	 * Returns a list with all rules
+	 */
+	public List<Rule> getRules() {
+		return index.getRules();
+	}
+
+	@Override
+	public Iterator<Rule> iterator() {
+		return index.iterator();
 	}
 	
 }

@@ -1,10 +1,14 @@
 package de.malkusch.whoisServerList.publicSuffixList.test.index;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
-
-import static org.junit.Assert.*;
+import java.util.Set;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,6 +21,7 @@ import de.malkusch.whoisServerList.publicSuffixList.index.ListIndex;
 import de.malkusch.whoisServerList.publicSuffixList.index.tree.TreeIndex;
 import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
 import de.malkusch.whoisServerList.publicSuffixList.rule.RuleFactory;
+import de.malkusch.whoisServerList.publicSuffixList.util.TestUtil;
 
 @RunWith(Parameterized.class)
 public class IndexTest {
@@ -32,6 +37,17 @@ public class IndexTest {
 		cases.add(new Index[]{ new TreeIndex() });
 		
 		return cases;
+	}
+	
+	@Test
+	public void testGetRules() throws IOException {
+		List<Rule> rules = TestUtil.getDefaultParsedRules();
+		Set<Rule> expected = new HashSet<>(rules);
+		
+		index.setRules(rules);
+		Set<Rule> actual = new HashSet<>(index.getRules());
+		
+		assertEquals(expected, actual);
 	}
 	
 	@Test

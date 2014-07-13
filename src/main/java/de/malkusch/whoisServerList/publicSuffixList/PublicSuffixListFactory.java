@@ -52,6 +52,12 @@ public class PublicSuffixListFactory {
 	 * @see #build()
 	 */
 	final public static String PROPERTY_FILE = "/psl.properties";
+	
+	public Properties getDefaults() throws IOException {
+		Properties properties = new Properties();
+		properties.load(getClass().getResourceAsStream(PROPERTY_FILE));
+		return properties;
+	}
 
 	/**
 	 * Builds a PublicSuffixList with custom properties.
@@ -93,9 +99,7 @@ public class PublicSuffixListFactory {
 	 */
 	public PublicSuffixList build() throws IOException {
 		try {
-			Properties properties = new Properties();
-			properties.load(getClass().getResourceAsStream(PROPERTY_FILE));
-			return build(properties);
+			return build(getDefaults());
 			
 		} catch (ClassNotFoundException e) {
 			throw new IllegalStateException(e);

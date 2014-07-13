@@ -76,6 +76,15 @@ class Node {
 		return getOrCreateDescendant(convert(rule));
 	}
 	
+	protected Collection<Node> getDescendants() {
+		Collection<Node> descendants = new ArrayList<Node>(children.values());
+		for (Node child : children.values()) {
+			descendants.addAll(child.getDescendants());
+			
+		}
+		return descendants;
+	}
+	
 	private Node getOrCreateDescendant(Deque<String> labels) {
 		if (labels.isEmpty()) {
 			return this;

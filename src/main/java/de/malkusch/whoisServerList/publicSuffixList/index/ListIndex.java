@@ -27,4 +27,9 @@ public class ListIndex extends Index {
 		this.rules = rules;
 	}
 
+	@Override
+	public List<Rule> getRules() {
+		return rules;
+	}
+
 }

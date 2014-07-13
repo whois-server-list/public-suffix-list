@@ -33,5 +33,18 @@ public class TreeIndex extends Index {
 		}
 		return rules;
 	}
+	
+	@Override
+	public List<Rule> getRules() {
+		List<Rule> rules = new ArrayList<>();
+		for (Node node : root.getDescendants()) {
+			Rule rule = node.getRule();
+			if (rule != null) {
+				rules.add(rule);
+				
+			}
+		}
+		return rules;
+	}
 
 }
