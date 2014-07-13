@@ -1,10 +1,10 @@
 package de.malkusch.whoisServerList.publicSuffixList.rule;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import de.malkusch.whoisServerList.publicSuffixList.rule.label.LabelMatcher;
 import de.malkusch.whoisServerList.publicSuffixList.util.DomainUtil;
 
 public class RuleMatcher {
@@ -51,7 +51,8 @@ public class RuleMatcher {
 			String matchLabel = reversedLabels[i];
 			String domainLabel = reversedDomainLabels[i];
 			
-			if (! match(matchLabel, domainLabel)) {
+			LabelMatcher matcher = new LabelMatcher(matchLabel);
+			if (! matcher.isMatch(domainLabel)) {
 				return null;
 				
 			}
@@ -60,18 +61,6 @@ public class RuleMatcher {
 		}
 		ArrayUtils.reverse(reversedMatchedLabels);
 		return DomainUtil.joinLabels(reversedMatchedLabels);
-	}
-	
-	private boolean match(String match, String label) {
-		if (StringUtils.isEmpty(label)) {
-			return false;
-			
-		}
-		if (match.equals(Rule.WILDCARD)) {
-			return true;
-			
-		}
-		return match.equalsIgnoreCase(label);
 	}
 	
 	@Override
