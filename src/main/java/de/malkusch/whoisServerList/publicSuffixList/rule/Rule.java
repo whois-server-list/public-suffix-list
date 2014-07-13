@@ -8,6 +8,8 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import de.malkusch.whoisServerList.publicSuffixList.util.DomainUtil;
 
 public class Rule {
+	
+	final public static Rule DEFAULT = new Rule("*"); 
 
 	final public static char EXCEPTION_TOKEN = '!';
 	
@@ -23,6 +25,10 @@ public class Rule {
 	
 	public int getLabelCount() {
 		return DomainUtil.splitLabels(matcher.getPattern()).length;
+	}
+	
+	public String getPattern() {
+		return matcher.getPattern();
 	}
 
 	@Override

@@ -2,8 +2,13 @@ package de.malkusch.whoisServerList.publicSuffixList;
 
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.Arrays;
 
-import de.malkusch.whoisServerList.publicSuffixList.exception.SuffixDomainException;
+import org.apache.commons.lang3.StringUtils;
+
+import de.malkusch.whoisServerList.publicSuffixList.index.Index;
+import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
+import de.malkusch.whoisServerList.publicSuffixList.util.DomainUtil;
 
 /**
  * @author markus@malkusch.de
@@ -16,27 +21,38 @@ public class PublicSuffixList {
 	
 	private Charset charset;
 	
+	private Index index;
+	
 	/**
 	 * @see PublicSuffixListFactory#build()
 	 */
-	protected PublicSuffixList(URL url, Charset charset) {
+	protected PublicSuffixList(Index index, URL url, Charset charset) {
+		this.index = index;
 		this.url = url;
 		this.charset = charset;
 	}
 	
 	/**
-	 * Gets the registrable domain.
-	 * 
-	 * @throws SuffixDomainException The domain is already a public suffix
+	 * Gets the registrable domain or null.
 	 */
-	public String getRegistrableDomain(String domain) throws SuffixDomainException {
+	public String getRegistrableDomain(String domain) {
 		if (domain == null) {
 			return null;
 			
 		}
-		
-		//TODO
-		return null;
+		String suffix = getPublicSuffix(domain);
+		if (StringUtils.equals(domain, suffix)) {
+			return null;
+			
+		}
+		String[] suffixLabels = DomainUtil.splitLabels(getPublicSuffix(domain));
+		if (suffixLabels == null) {
+			return null;
+			
+		}
+		String[] labels = DomainUtil.splitLabels(domain);
+		int offset = labels.length - suffixLabels.length - 1;
+		return DomainUtil.joinLabels(Arrays.copyOfRange(labels, offset, labels.length));
 	}
 	
 	/**
@@ -47,13 +63,11 @@ public class PublicSuffixList {
 			throw new NullPointerException();
 			
 		}
-		
-		//TODO
-		return false;
+		return getRegistrableDomain(domain) != null;
 	}
 	
 	/**
-	 * Returns the public suffix from a domain.
+	 * Returns the public suffix from a domain or null.
 	 * 
 	 * If the domain is already a public suffix, it will be returned unchanged.
 	 */
@@ -62,9 +76,12 @@ public class PublicSuffixList {
 			throw new NullPointerException();
 			
 		}
-		
-		//TODO
-		return null;
+		Rule rule = index.findRule(domain);
+		if (rule == null) {
+			return null;
+			
+		}
+		return rule.match(domain);
 	}
 	
 	/**
@@ -77,8 +94,7 @@ public class PublicSuffixList {
 			throw new NullPointerException();
 			
 		}
-		
-		return false;
+		return getPublicSuffix(domain) != null;
 	}
 	
 	/**
