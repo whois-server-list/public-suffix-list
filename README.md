@@ -1,24 +1,62 @@
 # Public Suffix List API
 
 This is a Java API for the [Public Suffix List](https://publicsuffix.org/).
+The semantic of the API keeps up with the specification of the Public Suffix List.
 
 
 # Installation
 
-This package will be available in Maven central.
+This package is available in Maven central:
 
+```xml
+<dependency>
+	<groupId>de.malkusch.whois-server-list</groupId>
+	<artifactId>public-suffix-list</artifactId>
+	<version>1.0.0</version>
+</dependency>
+```
 
 # Usage
 
-Create a `PublicSuffixList` with a `PublicSuffixListFactory`. Read more
-at the API documentation.
+Create a
+[`PublicSuffixList`](http://whois-server-list.github.io/public-suffix-list/apidocs/de/malkusch/whoisServerList/publicSuffixList/PublicSuffixList.html)
+with a
+[`PublicSuffixListFactory`](http://whois-server-list.github.io/public-suffix-list/apidocs/de/malkusch/whoisServerList/publicSuffixList/PublicSuffixListFactory.html):
+
+* [`PublicSuffixList.getRegistrableDomain()`](http://whois-server-list.github.io/public-suffix-list/apidocs/de/malkusch/whoisServerList/publicSuffixList/PublicSuffixList.html#getRegistrableDomain%28java.lang.String%29)
+Gets the registrable domain or null. E.g. `"www.example.net"` and `"example.net"` will return `"example.net"`.
+Null, an empty string or domains with a leading dot will return null.
+
+* [`PublicSuffixList.isRegistrable()`](http://whois-server-list.github.io/public-suffix-list/apidocs/de/malkusch/whoisServerList/publicSuffixList/PublicSuffixList.html#isRegistrable%28java.lang.String%29)
+Returns whether a domain is registrable. E.g. `"example.net"` is registrable, `"www.example.net"` and `"net"` are not.
+
+* [`PublicSuffixList.isPublicSuffix()`](http://whois-server-list.github.io/public-suffix-list/apidocs/de/malkusch/whoisServerList/publicSuffixList/PublicSuffixList.html#isPublicSuffix%28java.lang.String%29)
+Returns whether a domain is a public suffix or not. E.g. `"com"` is a public suffix, `"example.com"` isn't.
+
+* [`PublicSuffixList.getPublicSuffix()`](http://whois-server-list.github.io/public-suffix-list/apidocs/de/malkusch/whoisServerList/publicSuffixList/PublicSuffixList.html#getPublicSuffix%28java.lang.String%29)
+Returns the public suffix from a domain or null. If the domain is already a public suffix, it will be returned unchanged.
+E.g. `"www.example.net"` will return `"net"`.
+
+## IDN
+
+You can use the API's methods with UTF-8 domain names or Punnycode encoded ASCII domain names.
+The API will return the results in the same format as the input was. I.e. if you use an UTF-8
+string the result will be an UTF-8 String as well. Same for Punnycode.
+
+## Example
 
 ```java
 PublicSuffixListFactory factory = new PublicSuffixListFactory();
 PublicSuffixList suffixList = factory.build();
 
-System.out.println(suffixList.getRegistrableDomain("www.example.net"));
+assertTrue(suffixList.isPublicSuffix("net"));
+assertEquals("net", suffixList.getPublicSuffix("www.example.net"));
+assertEquals("net", suffixList.getPublicSuffix("net"));
+assertTrue(suffixList.isRegistrable("example.net"));
+assertEquals("example.net", suffixList.getRegistrableDomain("www.example.net"));
 
+assertEquals("食狮.com.cn", suffixList.getRegistrableDomain("食狮.com.cn"));
+assertEquals("xn--85x722f.com.cn", suffixList.getRegistrableDomain("xn--85x722f.com.cn"));
 ```
 
 

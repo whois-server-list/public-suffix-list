@@ -49,7 +49,7 @@ public class PublicSuffixList implements Iterable<Rule> {
 	 * Gets the registrable domain or null.
 	 * 
 	 * E.g. "www.example.net" and "example.net" will return "example.net".
-	 * Domains with a leading dot will return null as well.
+	 * Null, an empty string or domains with a leading dot will return null.
 	 */
 	public String getRegistrableDomain(String domain) {
 		if (StringUtils.isEmpty(domain)) {
@@ -87,7 +87,7 @@ public class PublicSuffixList implements Iterable<Rule> {
 	/**
 	 * Returns whether a domain is registrable.
 	 * 
-	 * E.g. example.net is registrable, www.example.net and net are not.
+	 * E.g. example.net is registrable, "www.example.net" and "net" are not.
 	 * 
 	 * @throws NullPointerException if domain is null.
 	 */
@@ -103,6 +103,7 @@ public class PublicSuffixList implements Iterable<Rule> {
 	 * Returns the public suffix from a domain or null.
 	 * 
 	 * If the domain is already a public suffix, it will be returned unchanged.
+	 * E.g. "www.example.net" will return "net".
 	 */
 	public String getPublicSuffix(String domain) {
 		if (StringUtils.isEmpty(domain)) {
