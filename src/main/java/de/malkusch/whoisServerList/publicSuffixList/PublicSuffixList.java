@@ -12,8 +12,18 @@ import de.malkusch.whoisServerList.publicSuffixList.util.DomainUtil;
 import de.malkusch.whoisServerList.publicSuffixList.util.PunnycodeAutoDecoder;
 
 /**
+ * API for the Public Suffix List.
+ * 
+ * Use {@link PublicSuffixListFactory} for building this api.
+ * 
+ * You can use the API's methods with UTF-8 domain names or Punnycode
+ * encoded ASCII domain names. The API will return the results in
+ * the same format as the input was. I.e. if you use an UTF-8 string
+ * the result will be an UTF-8 String as well. Same for Punnycode.
+ * 
  * @author markus@malkusch.de
  * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
+ * @see <a href="https://publicsuffix.org/">https://publicsuffix.org/</a>
  * @see PublicSuffixListFactory
  */
 public class PublicSuffixList {
@@ -35,6 +45,9 @@ public class PublicSuffixList {
 	
 	/**
 	 * Gets the registrable domain or null.
+	 * 
+	 * E.g. "www.example.net" and "example.net" will return "example.net".
+	 * Domains with a leading dot will return null as well.
 	 */
 	public String getRegistrableDomain(String domain) {
 		if (StringUtils.isEmpty(domain)) {
@@ -71,6 +84,10 @@ public class PublicSuffixList {
 	
 	/**
 	 * Returns whether a domain is registrable.
+	 * 
+	 * E.g. example.net is registrable, www.example.net and net are not.
+	 * 
+	 * @throws NullPointerException if domain is null.
 	 */
 	public boolean isRegistrable(String domain) {
 		if (domain == null) {
@@ -105,6 +122,8 @@ public class PublicSuffixList {
 	 * Returns whether a domain is a public suffix or not.
 	 * 
 	 * Example: "com" is a public suffix, "example.com" isn't. 
+	 * 
+	 * @throws NullPointerException is domain is null.
 	 */
 	public boolean isPublicSuffix(String domain) {
 		if (domain == null) {

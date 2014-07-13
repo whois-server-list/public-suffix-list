@@ -7,17 +7,58 @@ import java.util.List;
 import java.util.Properties;
 
 import de.malkusch.whoisServerList.publicSuffixList.index.Index;
+import de.malkusch.whoisServerList.publicSuffixList.index.tree.TreeIndex;
 import de.malkusch.whoisServerList.publicSuffixList.parser.Parser;
 import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
 
+/**
+ * Factory for PublicSuffixList.
+ * 
+ * @author markus@malkusch.de
+ * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
+ * @see PublicSuffixList
+ */
 public class PublicSuffixListFactory {
 
+	/**
+	 * URL of the Public Suffix List.
+	 * 
+	 * @see PublicSuffixList#getURL()
+	 */
 	final public static String PROPERTY_URL = "psl.url";
+	
+	/**
+	 * Character encoding of the list
+	 * 
+	 * @see PublicSuffixList#getCharset()
+	 */
 	final public static String PROPERTY_CHARSET = "psl.charset";
+	
+	/**
+	 * The factory will load the Public Suffix List from this file.
+	 */
 	final public static String PROPERTY_LIST_FILE = "psl.file";
+	
+	/**
+	 * Index implementation.
+	 * 
+	 * @see Index
+	 */
 	final public static String PROPERTY_INDEX = "psl.index";
+	
+	/**
+	 * Location of the default properties.
+	 * 
+	 * @see #build()
+	 */
 	final public static String PROPERTY_FILE = "/psl.properties";
 
+	/**
+	 * Builds a PublicSuffixList with custom properties.
+	 * 
+	 * It is a good idea to load the default properties at {@link #PROPERTY_FILE} and
+	 * overwrite keys as required.
+	 */
 	public PublicSuffixList build(Properties properties) throws IOException, ClassNotFoundException {
 		try {
 			URL url = new URL(properties.getProperty(PROPERTY_URL));
@@ -42,6 +83,14 @@ public class PublicSuffixListFactory {
 		}
 	}
 
+	/**
+	 * Builds a PublicSuffixList with the default properties.
+	 * 
+	 * The default properties are included in the jar file at /psl.properties.
+	 * This list uses the bundled list file and a {@link TreeIndex}.
+	 * 
+	 * @see #PROPERTY_FILE
+	 */
 	public PublicSuffixList build() throws IOException {
 		try {
 			Properties properties = new Properties();
