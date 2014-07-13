@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import de.malkusch.whoisServerList.publicSuffixList.index.Index;
 import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
 import de.malkusch.whoisServerList.publicSuffixList.util.DomainUtil;
+import de.malkusch.whoisServerList.publicSuffixList.util.PunnycodeAutoDecoder;
 
 /**
  * @author markus@malkusch.de
@@ -36,10 +37,21 @@ public class PublicSuffixList {
 	 * Gets the registrable domain or null.
 	 */
 	public String getRegistrableDomain(String domain) {
-		if (domain == null) {
+		if (StringUtils.isEmpty(domain)) {
 			return null;
 			
 		}
+		/*
+		 * Mozilla's test cases implies that leading dots result to no registrable domain
+		 * @see http://mxr.mozilla.org/mozilla-central/source/netwerk/test/unit/data/test_psl.txt?raw=1
+		 */
+		if (domain.charAt(0) == '.') {
+			return null;
+			
+		}
+		PunnycodeAutoDecoder punnycode = new PunnycodeAutoDecoder();
+		domain = punnycode.decode(domain);
+		
 		String suffix = getPublicSuffix(domain);
 		if (StringUtils.equals(domain, suffix)) {
 			return null;
@@ -52,7 +64,9 @@ public class PublicSuffixList {
 		}
 		String[] labels = DomainUtil.splitLabels(domain);
 		int offset = labels.length - suffixLabels.length - 1;
-		return DomainUtil.joinLabels(Arrays.copyOfRange(labels, offset, labels.length));
+		String registrableDomain = DomainUtil.joinLabels(Arrays.copyOfRange(labels, offset, labels.length));
+		
+		return punnycode.recode(registrableDomain);
 	}
 	
 	/**
@@ -72,16 +86,19 @@ public class PublicSuffixList {
 	 * If the domain is already a public suffix, it will be returned unchanged.
 	 */
 	public String getPublicSuffix(String domain) {
-		if (domain == null) {
-			throw new NullPointerException();
+		if (StringUtils.isEmpty(domain)) {
+			return null;
 			
 		}
+		PunnycodeAutoDecoder punnycode = new PunnycodeAutoDecoder();
+		domain = punnycode.recode(domain);
+		
 		Rule rule = index.findRule(domain);
 		if (rule == null) {
 			return null;
 			
 		}
-		return rule.match(domain);
+		return punnycode.decode(rule.match(domain));
 	}
 	
 	/**

@@ -32,7 +32,9 @@ public class PublicSuffixListFactory {
 			Index index = (Index) Class.forName(properties.getProperty(PROPERTY_INDEX)).newInstance();
 			index.setRules(rules);
 			
-			return new PublicSuffixList(index, url, charset);
+			PublicSuffixList list = new PublicSuffixList(index, url, charset);
+			
+			return list;
 			
 		} catch (InstantiationException | IllegalAccessException e) {
 			throw new IllegalStateException(e);

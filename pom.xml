@@ -68,6 +68,7 @@
 				<version>1.2.0</version>
 				<executions>
 					<execution>
+						<id>package-psl</id>
 						<phase>generate-resources</phase>
 						<goals>
 							<goal>wget</goal>
@@ -75,6 +76,19 @@
 						<configuration>
 							<url>${psl.url}</url>
 							<outputDirectory>${project.build.outputDirectory}</outputDirectory>
+							<outputFileName>${psl.file}</outputFileName>
+						</configuration>
+					</execution>
+					<execution>
+						<id>test-psl-cases</id>
+						<phase>generate-test-sources</phase>
+						<goals>
+							<goal>wget</goal>
+						</goals>
+						<configuration>
+							<url>http://mxr.mozilla.org/mozilla-central/source/netwerk/test/unit/data/test_psl.txt?raw=1</url>
+							<outputDirectory>${project.build.directory}/test-classes</outputDirectory>
+							<outputFileName>checkPublicSuffix.txt</outputFileName>
 						</configuration>
 					</execution>
 				</executions>
