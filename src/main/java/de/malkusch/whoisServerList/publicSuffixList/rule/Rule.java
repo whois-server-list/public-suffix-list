@@ -20,6 +20,10 @@ public class Rule {
 	public Rule(String pattern) {
 		this.matcher = new RuleMatcher(pattern);
 	}
+	
+	public int getLabelCount() {
+		return DomainUtil.splitLabels(matcher.getPattern()).length;
+	}
 
 	@Override
 	public String toString() {

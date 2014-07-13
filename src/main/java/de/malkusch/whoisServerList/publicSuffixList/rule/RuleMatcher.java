@@ -63,11 +63,15 @@ public class RuleMatcher {
 		return DomainUtil.joinLabels(reversedMatchedLabels);
 	}
 	
-	@Override
-	public String toString() {
+	public String getPattern() {
 		String[] labels = reversedLabels.clone();
 		ArrayUtils.reverse(labels);
 		return DomainUtil.joinLabels(labels);
+	}
+	
+	@Override
+	public String toString() {
+		return getPattern();
 	}
 	
 	@Override
