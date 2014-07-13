@@ -11,17 +11,17 @@ import org.apache.commons.lang3.StringUtils;
 import de.malkusch.whoisServerList.publicSuffixList.index.Index;
 import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
 import de.malkusch.whoisServerList.publicSuffixList.util.DomainUtil;
-import de.malkusch.whoisServerList.publicSuffixList.util.PunnycodeAutoDecoder;
+import de.malkusch.whoisServerList.publicSuffixList.util.PunycodeAutoDecoder;
 
 /**
  * API for the Public Suffix List.
  * 
  * Use {@link PublicSuffixListFactory} for building this api.
  * 
- * You can use the API's methods with UTF-8 domain names or Punnycode
+ * You can use the API's methods with UTF-8 domain names or Punycode
  * encoded ASCII domain names. The API will return the results in
  * the same format as the input was. I.e. if you use an UTF-8 string
- * the result will be an UTF-8 String as well. Same for Punnycode.
+ * the result will be an UTF-8 String as well. Same for Punycode.
  * 
  * @author markus@malkusch.de
  * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
@@ -64,8 +64,8 @@ public class PublicSuffixList implements Iterable<Rule> {
 			return null;
 			
 		}
-		PunnycodeAutoDecoder punnycode = new PunnycodeAutoDecoder();
-		domain = punnycode.decode(domain);
+		PunycodeAutoDecoder punycode = new PunycodeAutoDecoder();
+		domain = punycode.decode(domain);
 		
 		String suffix = getPublicSuffix(domain);
 		if (StringUtils.equals(domain, suffix)) {
@@ -81,7 +81,7 @@ public class PublicSuffixList implements Iterable<Rule> {
 		int offset = labels.length - suffixLabels.length - 1;
 		String registrableDomain = DomainUtil.joinLabels(Arrays.copyOfRange(labels, offset, labels.length));
 		
-		return punnycode.recode(registrableDomain);
+		return punycode.recode(registrableDomain);
 	}
 	
 	/**
@@ -110,15 +110,15 @@ public class PublicSuffixList implements Iterable<Rule> {
 			return null;
 			
 		}
-		PunnycodeAutoDecoder punnycode = new PunnycodeAutoDecoder();
-		domain = punnycode.recode(domain);
+		PunycodeAutoDecoder punycode = new PunycodeAutoDecoder();
+		domain = punycode.recode(domain);
 		
 		Rule rule = index.findRule(domain);
 		if (rule == null) {
 			return null;
 			
 		}
-		return punnycode.decode(rule.match(domain));
+		return punycode.decode(rule.match(domain));
 	}
 	
 	/**

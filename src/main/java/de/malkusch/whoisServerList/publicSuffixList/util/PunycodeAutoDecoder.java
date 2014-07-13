@@ -2,7 +2,7 @@ package de.malkusch.whoisServerList.publicSuffixList.util;
 
 import java.net.IDN;
 
-public class PunnycodeAutoDecoder {
+public class PunycodeAutoDecoder {
 	
 	private boolean decoded;
 	
