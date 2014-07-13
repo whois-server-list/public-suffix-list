@@ -5,7 +5,21 @@ This is a Java API for the [Public Suffix List](https://publicsuffix.org/).
 
 # Installation
 
-This package will be available in maven.
+This package will be available in Maven central.
+
+
+# Usage
+
+Create a `PublicSuffixList` with a `PublicSuffixListFactory`. Read more
+at the API documentation.
+
+```java
+PublicSuffixListFactory factory = new PublicSuffixListFactory();
+PublicSuffixList suffixList = factory.build();
+
+System.out.println(suffixList.getRegistrableDomain("www.example.net"));
+
+```
 
 
 # License and author
