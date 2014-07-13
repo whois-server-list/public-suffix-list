@@ -63,7 +63,7 @@ public class PublicSuffixList {
 			throw new NullPointerException();
 			
 		}
-		return getRegistrableDomain(domain) != null;
+		return domain.equals(getRegistrableDomain(domain));
 	}
 	
 	/**
@@ -94,7 +94,7 @@ public class PublicSuffixList {
 			throw new NullPointerException();
 			
 		}
-		return getPublicSuffix(domain) != null;
+		return domain.equals(getPublicSuffix(domain));
 	}
 	
 	/**

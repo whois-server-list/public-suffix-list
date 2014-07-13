@@ -134,8 +134,8 @@ public class PublicSuffixListTest {
 		assertEquals("com", psl.getPublicSuffix("example.com"));
 		assertEquals("com", psl.getPublicSuffix("www.example.com"));
 		assertEquals("co.uk", psl.getPublicSuffix("www.example.co.uk"));
-		assertEquals("example.uk", psl.getPublicSuffix("uk"));
-		assertEquals("example.test.sch.uk", psl.getPublicSuffix("test.sch.uk"));
+		assertEquals("uk", psl.getPublicSuffix("example.uk"));
+		assertEquals("test.sch.uk", psl.getPublicSuffix("example.test.sch.uk"));
 		assertEquals("fallback", psl.getPublicSuffix("example.fallback"));
 	}
 	
