@@ -1,5 +1,7 @@
 package de.malkusch.whoisServerList.publicSuffixList.exception;
 
+import java.io.Serializable;
+
 /**
  * Base exception for the Public Suffix List API.
  *
@@ -8,6 +10,10 @@ package de.malkusch.whoisServerList.publicSuffixList.exception;
  */
 public class PublicSuffixListException extends Exception {
 
+    /**
+     * Version number.
+     * @see Serializable
+     */
     private static final long serialVersionUID = 96681329244532124L;
 
 }

@@ -7,14 +7,27 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import de.malkusch.whoisServerList.publicSuffixList.rule.label.LabelMatcher;
 import de.malkusch.whoisServerList.publicSuffixList.util.DomainUtil;
 
-public class RuleMatcher {
+/**
+ * The rule matcher.
+ *
+ * The matcher is case insensitive.
+ *
+ * @author markus@malkusch.de
+ * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
+ */
+public final class RuleMatcher {
 
+    /**
+     * Rule labels in reversed order.
+     */
     private String[] reversedLabels;
 
     /**
-     * set a copy of the labels.
+     * Sets the rule labels.
      *
-     * @param labels Rule labels
+     * The labels are stored as a reversed copy in {@link #reversedLabels}.
+     *
+     * @param labels  the rule labels, not null
      */
     public RuleMatcher(final String[] labels) {
         this.reversedLabels = labels.clone();
@@ -22,18 +35,23 @@ public class RuleMatcher {
     }
 
     /**
-     * Set the labels.
+     * Sets the rule labels.
      *
-     * @param labels Rule pattern
+     * The labels are stored as a reversed copy in {@link #reversedLabels}.
+     *
+     * @param pattern  the rule pattern, not null
      */
-    public RuleMatcher(final String labels) {
-        this(DomainUtil.splitLabels(labels));
+    public RuleMatcher(final String pattern) {
+        this(DomainUtil.splitLabels(pattern));
     }
 
     /**
-     * Return the matched suffix or null.
+     * Returns the matched public suffix.
      *
-     * @param domain Domain name
+     * Matching is case insensitive.
+     *
+     * @param domain  the domain name, may be null
+     * @return the matched public suffix or null
      */
     public String match(final String domain) {
         if (domain == null) {
@@ -69,6 +87,11 @@ public class RuleMatcher {
         return DomainUtil.joinLabels(reversedMatchedLabels);
     }
 
+    /**
+     * Returns the rule pattern.
+     *
+     * @return the rule pattern, not null
+     */
     public String getPattern() {
         String[] labels = reversedLabels.clone();
         ArrayUtils.reverse(labels);

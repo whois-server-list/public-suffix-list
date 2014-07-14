@@ -63,7 +63,9 @@ public final class PublicSuffixListFactory {
      * @return default {@code Properties}
      */
     public Properties getDefaults() {
-        try (InputStream stream = getClass().getResourceAsStream(PROPERTY_FILE)) {
+        try (InputStream stream
+                = getClass().getResourceAsStream(PROPERTY_FILE)) {
+
             Properties properties = new Properties();
             properties.load(stream);
             return properties;
@@ -82,14 +84,22 @@ public final class PublicSuffixListFactory {
      *
      * @param properties Properties for building the {@link PublicSuffixList}.
      * @see #getDefaults()
-     * @throws ClassNotFoundException If {@link #PROPERTY_INDEX} is not a valid {@link Index} implementation.
+     * @throws ClassNotFoundException If {@link #PROPERTY_INDEX} is not a valid
+     *  {@link Index} implementation
      * @throws IOException If {@link #PROPERTY_LIST_FILE} can't be read.
      * @return The {@code PublicSuffixList} build with the {@code Properties}
      */
-    public PublicSuffixList build(final Properties properties) throws IOException, ClassNotFoundException {
-        try (InputStream listStream = getClass().getResourceAsStream(properties.getProperty(PROPERTY_LIST_FILE))) {
+    public PublicSuffixList build(final Properties properties)
+            throws IOException, ClassNotFoundException {
+
+        String propertyFile = properties.getProperty(PROPERTY_LIST_FILE);
+        try (InputStream listStream
+                = getClass().getResourceAsStream(propertyFile)) {
+
             URL url = new URL(properties.getProperty(PROPERTY_URL));
-            Charset charset = Charset.forName(properties.getProperty(PROPERTY_CHARSET));
+
+            Charset charset
+                = Charset.forName(properties.getProperty(PROPERTY_CHARSET));
 
             Parser parser = new Parser();
             List<Rule> rules = parser.parse(listStream, charset);
@@ -97,7 +107,8 @@ public final class PublicSuffixListFactory {
             // add default rule
             rules.add(Rule.DEFAULT);
 
-            Index index = (Index) Class.forName(properties.getProperty(PROPERTY_INDEX)).newInstance();
+            String indexClassName = properties.getProperty(PROPERTY_INDEX);
+            Index index = (Index) Class.forName(indexClassName).newInstance();
             index.setRules(rules);
 
             PublicSuffixList list = new PublicSuffixList(index, url, charset);
@@ -115,7 +126,8 @@ public final class PublicSuffixListFactory {
      *
      * @see #PROPERTY_FILE
      * @see #getDefaults()
-     * @return The {@code PublicSuffixList} build with the default {@code Properties}
+     * @return The {@code PublicSuffixList} build
+     *  with the default {@code Properties}
      */
     public PublicSuffixList build() {
         try {

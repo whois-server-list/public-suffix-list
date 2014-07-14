@@ -13,26 +13,52 @@ import java.util.regex.Pattern;
 import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
 import de.malkusch.whoisServerList.publicSuffixList.rule.RuleFactory;
 
-public class Parser {
+/**
+ * The parser for the Public Suffix List file.
+ *
+ * The parser takes the Public Suffix List file as input and returns a
+ * {@link Rule} list.
+ *
+ * @author markus@malkusch.de
+ * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
+ */
+public final class Parser {
 
-    private static Pattern rule = Pattern.compile("^(\\S+)");
+    /**
+     * The rule line pattern.
+     */
+    private static Pattern ruleLine = Pattern.compile("^(\\S+)");
 
+    /**
+     * The comment line pattern.
+     */
     private static Pattern commentLine = Pattern.compile("^//.*$");
 
+    /**
+     * The white space line pattern.
+     */
     private static Pattern whiteSpaceLine = Pattern.compile("^\\s*$");
 
+    /**
+     * The rule factory.
+     */
     private RuleFactory ruleFactory = new RuleFactory();
 
     /**
      * Parses all rules from a stream.
      *
-     * @param stream Stream with lines of rules
-     * @param charset Encoding of that stream
+     * @param stream  the stream with lines of rules, not null
+     * @param charset  the character encoding of that stream, not null
+     * @return the {@code Rule} list, not null
+     *
      * @throws IOException If reading from the stream fails
      */
-    public List<Rule> parse(final InputStream stream, final Charset charset) throws IOException {
+    public List<Rule> parse(final InputStream stream, final Charset charset)
+            throws IOException {
+
         List<Rule> rules = new ArrayList<>();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(stream, charset));
+        BufferedReader reader
+            = new BufferedReader(new InputStreamReader(stream, charset));
 
         String line;
         while ((line = reader.readLine()) != null) {
@@ -48,11 +74,11 @@ public class Parser {
     }
 
     /**
-     * Parse a line for a rule.
+     * Parses a line for a rule.
      *
-     * Returns null if no rule was found.
+     * @param line  the line with one rule, may be null
+     * @return the parsed {@code Rule}, or null if no rule was found
      *
-     * @param line Line with one rule
      */
     public Rule parseLine(final String line) {
         if (line == null) {
@@ -71,7 +97,7 @@ public class Parser {
 
         }
 
-        Matcher matcher = rule.matcher(trimmedline);
+        Matcher matcher = ruleLine.matcher(trimmedline);
         if (!matcher.find()) {
             return null;
 

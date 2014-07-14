@@ -6,18 +6,28 @@ import java.util.Comparator;
 /**
  * Orders prevailing rules higher.
  *
+ * The rule with the highest {@link Rule#getLabelCount()} is the
+ * prevailing rule. An exception rule is always the prevailing rule.
+ *
  * @author markus@malkusch.de
  * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
+ * @see Rule#isExceptionRule()
+ * @see Rule#getLabelCount()
  */
-public class RuleComparator implements Comparator<Rule>, Serializable {
+public final class RuleComparator implements Comparator<Rule>, Serializable {
 
+    /**
+     * Version number.
+     * @see Serializable
+     */
     private static final long serialVersionUID = -3222683638595906734L;
 
     @Override
     public int compare(final Rule rule1, final Rule rule2) {
         if (rule1.isExceptionRule() && rule2.isExceptionRule()) {
             if (!rule1.equals(rule2)) {
-                throw new IllegalArgumentException("You can't compare two exception rules.");
+                throw new IllegalArgumentException(
+                    "You can't compare two exception rules.");
 
             }
             return 0;

@@ -60,13 +60,14 @@ public final class PublicSuffixList implements Iterable<Rule> {
     }
 
     /**
-     * Gets the registrable domain or null.
+     * Gets the registrable domain.
      *
      * E.g. "www.example.net" and "example.net" will return "example.net".
      * Null, an empty string or domains with a leading dot will return null.
      *
-     * @param domain Domain name
-     * @return the registrable domain or {@code null} if the domain is not registrable at all.
+     * @param domain  Domain name, null returns null
+     * @return the registrable domain,
+     *  null if the domain is not registrable at all
      */
     public String getRegistrableDomain(final String domain) {
         if (StringUtils.isEmpty(domain)) {
@@ -74,8 +75,9 @@ public final class PublicSuffixList implements Iterable<Rule> {
 
         }
         /*
-         * Mozilla's test cases implies that leading dots result to no registrable domain
-         * @see http://mxr.mozilla.org/mozilla-central/source/netwerk/test/unit/data/test_psl.txt?raw=1
+         * Mozilla's test cases implies that leading dots
+         * result to no registrable domain.
+         * @see ExampleTest
          */
         if (domain.charAt(0) == '.') {
             return null;
@@ -89,14 +91,15 @@ public final class PublicSuffixList implements Iterable<Rule> {
             return null;
 
         }
-        String[] suffixLabels = DomainUtil.splitLabels(getPublicSuffix(decodedDomain));
+        String[] suffixLabels = DomainUtil.splitLabels(suffix);
         if (suffixLabels == null) {
             return null;
 
         }
         String[] labels = DomainUtil.splitLabels(decodedDomain);
         int offset = labels.length - suffixLabels.length - 1;
-        String registrableDomain = DomainUtil.joinLabels(Arrays.copyOfRange(labels, offset, labels.length));
+        String registrableDomain = DomainUtil.joinLabels(
+                Arrays.copyOfRange(labels, offset, labels.length));
 
         return punycode.recode(registrableDomain);
     }
@@ -106,13 +109,12 @@ public final class PublicSuffixList implements Iterable<Rule> {
      *
      * E.g. example.net is registrable, "www.example.net" and "net" are not.
      *
-     * @param domain Domain name
-     * @throws NullPointerException if domain is null.
+     * @param domain Domain name, not null
      * @return {@code true} if the domain is registrable
      */
     public boolean isRegistrable(final String domain) {
         if (domain == null) {
-            throw new NullPointerException();
+            throw new IllegalArgumentException("The domain must not be null");
 
         }
         return domain.equals(getRegistrableDomain(domain));
@@ -148,13 +150,12 @@ public final class PublicSuffixList implements Iterable<Rule> {
      *
      * Example: "com" is a public suffix, "example.com" isn't.
      *
-     * @param domain Domain name
-     * @throws NullPointerException is domain is null.
+     * @param domain Domain name, not null
      * @return {@code true} if the domain is a public suffix
      */
     public boolean isPublicSuffix(final String domain) {
         if (domain == null) {
-            throw new NullPointerException();
+            throw new IllegalArgumentException("The domain must not be null");
 
         }
         return domain.equals(getPublicSuffix(domain));

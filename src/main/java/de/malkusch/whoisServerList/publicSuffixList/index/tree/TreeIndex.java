@@ -13,8 +13,11 @@ import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
  * @author markus@malkusch.de
  * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
  */
-public class TreeIndex extends Index {
+public final class TreeIndex extends Index {
 
+    /**
+     * The root.
+     */
     private Node root;
 
     @Override

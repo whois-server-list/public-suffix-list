@@ -9,10 +9,21 @@ import java.util.TreeSet;
 
 import org.apache.commons.lang3.StringUtils;
 
+import de.malkusch.whoisServerList.publicSuffixList.PublicSuffixListFactory;
 import de.malkusch.whoisServerList.publicSuffixList.parser.Parser;
 import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
 import de.malkusch.whoisServerList.publicSuffixList.rule.RuleComparator;
 
+/**
+ * Rule index.
+ *
+ * The {@link PublicSuffixListFactory} builds the {@code PublicSuffixList} with
+ * the index defined with
+ * the property {@link PublicSuffixListFactory#PROPERTY_INDEX}.
+ *
+ * @author markus@malkusch.de
+ * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
+ */
 public abstract class Index implements Iterable<Rule> {
 
     /**
@@ -24,12 +35,21 @@ public abstract class Index implements Iterable<Rule> {
     public abstract void setRules(List<Rule> rules);
 
     /**
-     * Finds all matching rules.
+     * Finds a list of matching rules.
      *
-     * @param domain Domain name
+     * This list may not include all matching rules, but must include the
+     * prevailing rule.
+     *
+     * @param domain  domain name, may be null
+     * @return list of matching rules, not null.
      */
     protected abstract Collection<Rule> findRules(String domain);
 
+    /**
+     * Returns all rules of this index.
+     *
+     * @return all rules, not null
+     */
     public abstract List<Rule> getRules();
 
     @Override
@@ -38,9 +58,10 @@ public abstract class Index implements Iterable<Rule> {
     }
 
     /**
-     * Finds the prevailing rule or null.
+     * Finds the prevailing rule.
      *
-     * @param domain Domain name
+     * @param domain  Domain name, null returns null
+     * @return the prevailing rule, null if no rule matches
      */
     public final Rule findRule(final String domain) {
         try {
