@@ -1,16 +1,15 @@
 package de.malkusch.whoisServerList.publicSuffixList.index;
 
 import java.util.Collection;
-import java.util.Iterator;
+import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.SortedSet;
-import java.util.TreeSet;
+
+import net.jcip.annotations.ThreadSafe;
 
 import org.apache.commons.lang3.StringUtils;
 
 import de.malkusch.whoisServerList.publicSuffixList.PublicSuffixListFactory;
-import de.malkusch.whoisServerList.publicSuffixList.parser.Parser;
 import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
 import de.malkusch.whoisServerList.publicSuffixList.rule.RuleComparator;
 
@@ -21,18 +20,13 @@ import de.malkusch.whoisServerList.publicSuffixList.rule.RuleComparator;
  * the index defined with
  * the property {@link PublicSuffixListFactory#PROPERTY_INDEX}.
  *
+ * Index implementations must be thread-safe.
+ *
  * @author markus@malkusch.de
  * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
  */
-public abstract class Index implements Iterable<Rule> {
-
-    /**
-     * Initializes the index with all rules.
-     *
-     * @param rules Rule list
-     * @see Parser#parse(java.io.InputStream, java.nio.charset.Charset)
-     */
-    public abstract void setRules(List<Rule> rules);
+@ThreadSafe
+public abstract class Index {
 
     /**
      * Finds a list of matching rules.
@@ -52,11 +46,6 @@ public abstract class Index implements Iterable<Rule> {
      */
     public abstract List<Rule> getRules();
 
-    @Override
-    public Iterator<Rule> iterator() {
-        return getRules().iterator();
-    }
-
     /**
      * Finds the prevailing rule.
      *
@@ -69,9 +58,7 @@ public abstract class Index implements Iterable<Rule> {
                 return null;
 
             }
-            SortedSet<Rule> rules = new TreeSet<>(new RuleComparator());
-            rules.addAll(findRules(domain));
-            return rules.last();
+            return Collections.max(findRules(domain), new RuleComparator());
 
         } catch (NoSuchElementException e) {
             return null;

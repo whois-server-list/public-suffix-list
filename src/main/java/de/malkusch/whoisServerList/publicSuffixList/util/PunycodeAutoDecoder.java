@@ -2,6 +2,8 @@ package de.malkusch.whoisServerList.publicSuffixList.util;
 
 import java.net.IDN;
 
+import net.jcip.annotations.NotThreadSafe;
+
 /**
  * Automatic Punycode Codec.
  *
@@ -15,6 +17,7 @@ import java.net.IDN;
  * @author markus@malkusch.de
  * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
  */
+@NotThreadSafe
 public final class PunycodeAutoDecoder {
 
     /**

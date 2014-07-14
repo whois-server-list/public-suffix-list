@@ -2,6 +2,8 @@ package de.malkusch.whoisServerList.publicSuffixList.rule;
 
 import java.util.Arrays;
 
+import net.jcip.annotations.Immutable;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -14,6 +16,7 @@ import de.malkusch.whoisServerList.publicSuffixList.util.DomainUtil;
  * @author markus@malkusch.de
  * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
  */
+@Immutable
 public final class Rule {
 
     /**
@@ -38,22 +41,35 @@ public final class Rule {
     /**
      * The rule matcher.
      */
-    private RuleMatcher matcher;
+    private final RuleMatcher matcher;
 
     /**
      * Whether this is an exception rule or not.
      */
-    private boolean exceptionRule;
+    private final boolean exceptionRule;
 
     /**
-     * Sets the rule matching pattern.
+     * Initializes a normal rule.
      *
      * The pattern has no more exception token!
      *
      * @param pattern  the rule matching pattern
      */
     public Rule(final String pattern) {
+        this(pattern, false);
+    }
+
+    /**
+     * Initializes a rule.
+     *
+     * The pattern has no more exception token!
+     *
+     * @param pattern  the rule matching pattern
+     * @param exceptionRule  whether this is an exception rule
+     */
+    public Rule(final String pattern, final boolean exceptionRule) {
         this.matcher = new RuleMatcher(pattern);
+        this.exceptionRule = exceptionRule;
     }
 
     /**
@@ -94,15 +110,6 @@ public final class Rule {
     @Override
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this);
-    }
-
-    /**
-     * Set true for exception rules.
-     *
-     * @param exceptionRule  whether this is an exception rule
-     */
-    public void setExceptionRule(final boolean exceptionRule) {
-        this.exceptionRule = exceptionRule;
     }
 
     /**

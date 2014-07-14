@@ -7,18 +7,20 @@ import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Properties;
 
+import net.jcip.annotations.Immutable;
 import de.malkusch.whoisServerList.publicSuffixList.index.Index;
-import de.malkusch.whoisServerList.publicSuffixList.index.tree.TreeIndex;
+import de.malkusch.whoisServerList.publicSuffixList.index.IndexFactory;
 import de.malkusch.whoisServerList.publicSuffixList.parser.Parser;
 import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
 
 /**
- * Factory for PublicSuffixList.
+ * The factory for {@code PublicSuffixList}.
  *
  * @author markus@malkusch.de
  * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
  * @see PublicSuffixList
  */
+@Immutable
 public final class PublicSuffixListFactory {
 
     /**
@@ -43,9 +45,20 @@ public final class PublicSuffixListFactory {
     /**
      * Index implementation.
      *
-     * @see Index
+     * @see #PROPERTY_INDEX_FACTORY
+     * @deprecated use {@link #PROPERTY_INDEX_FACTORY}.
      */
+    @Deprecated
     public static final String PROPERTY_INDEX = "psl.index";
+
+    /**
+     * Index factory.
+     *
+     * @see IndexFactory
+     * @since 2.0.0
+     */
+    public static final String PROPERTY_INDEX_FACTORY = "psl.indexFactory";
+
 
     /**
      * Location of the default properties.
@@ -58,7 +71,7 @@ public final class PublicSuffixListFactory {
      * The default properties.
      *
      * The default properties are included in the jar file at /psl.properties.
-     * It uses a bundled list file and a {@link TreeIndex}.
+     * It uses a bundled list file and a {@code TreeIndexFactory}.
      *
      * @return default {@code Properties}
      */
@@ -84,8 +97,8 @@ public final class PublicSuffixListFactory {
      *
      * @param properties Properties for building the {@link PublicSuffixList}.
      * @see #getDefaults()
-     * @throws ClassNotFoundException If {@link #PROPERTY_INDEX} is not a valid
-     *  {@link Index} implementation
+     * @throws ClassNotFoundException If {@link #PROPERTY_INDEX_FACTORY}
+     *  is not a {@link IndexFactory} implementation
      * @throws IOException If {@link #PROPERTY_LIST_FILE} can't be read.
      * @return The {@code PublicSuffixList} build with the {@code Properties}
      */
@@ -107,9 +120,14 @@ public final class PublicSuffixListFactory {
             // add default rule
             rules.add(Rule.DEFAULT);
 
-            String indexClassName = properties.getProperty(PROPERTY_INDEX);
-            Index index = (Index) Class.forName(indexClassName).newInstance();
-            index.setRules(rules);
+            String indexFactoryClassName
+                = properties.getProperty(PROPERTY_INDEX_FACTORY);
+            @SuppressWarnings("unchecked")
+            Class<IndexFactory> indexFactoryClass
+                = (Class<IndexFactory>) Class.forName(indexFactoryClassName);
+            IndexFactory indexFactory = indexFactoryClass.newInstance();
+
+            Index index = indexFactory.build(rules);
 
             PublicSuffixList list = new PublicSuffixList(index, url, charset);
 

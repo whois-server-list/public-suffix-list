@@ -21,8 +21,8 @@ import org.junit.runners.Parameterized.Parameters;
 
 import de.malkusch.whoisServerList.publicSuffixList.PublicSuffixList;
 import de.malkusch.whoisServerList.publicSuffixList.PublicSuffixListFactory;
-import de.malkusch.whoisServerList.publicSuffixList.index.ListIndex;
-import de.malkusch.whoisServerList.publicSuffixList.index.tree.TreeIndex;
+import de.malkusch.whoisServerList.publicSuffixList.index.array.ArrayIndexFactory;
+import de.malkusch.whoisServerList.publicSuffixList.index.tree.TreeIndexFactory;
 
 @RunWith(Parameterized.class)
 public class PublicSuffixListTest {
@@ -52,11 +52,15 @@ public class PublicSuffixListTest {
         cases.add(defaultProperties);
 
         Properties listIndex = new Properties(defaultProperties);
-        listIndex.setProperty(PublicSuffixListFactory.PROPERTY_INDEX, ListIndex.class.getName());
+        listIndex.setProperty(
+            PublicSuffixListFactory.PROPERTY_INDEX_FACTORY,
+            ArrayIndexFactory.class.getName());
         cases.add(listIndex);
 
         Properties treeIndex = new Properties(defaultProperties);
-        listIndex.setProperty(PublicSuffixListFactory.PROPERTY_INDEX, TreeIndex.class.getName());
+        listIndex.setProperty(
+            PublicSuffixListFactory.PROPERTY_INDEX_FACTORY,
+            TreeIndexFactory.class.getName());
         cases.add(treeIndex);
 
         return cases;
@@ -98,6 +102,7 @@ public class PublicSuffixListTest {
         assertTrue(psl.isRegistrable("example.test.ck"));
         assertTrue(psl.isRegistrable("www.ck"));
         assertTrue(psl.isRegistrable("example.invalid"));
+        assertTrue(psl.isRegistrable("www.global.prod.fastly.net"));
 
         assertFalse(psl.isRegistrable("www.example.de"));
         assertFalse(psl.isRegistrable("co.uk"));

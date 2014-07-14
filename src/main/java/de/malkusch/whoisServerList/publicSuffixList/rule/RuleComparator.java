@@ -3,6 +3,8 @@ package de.malkusch.whoisServerList.publicSuffixList.rule;
 import java.io.Serializable;
 import java.util.Comparator;
 
+import net.jcip.annotations.Immutable;
+
 /**
  * Orders prevailing rules higher.
  *
@@ -14,6 +16,7 @@ import java.util.Comparator;
  * @see Rule#isExceptionRule()
  * @see Rule#getLabelCount()
  */
+@Immutable
 public final class RuleComparator implements Comparator<Rule>, Serializable {
 
     /**

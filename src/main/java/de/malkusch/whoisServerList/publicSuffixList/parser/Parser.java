@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.jcip.annotations.Immutable;
 import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
 import de.malkusch.whoisServerList.publicSuffixList.rule.RuleFactory;
 
@@ -22,6 +23,7 @@ import de.malkusch.whoisServerList.publicSuffixList.rule.RuleFactory;
  * @author markus@malkusch.de
  * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
  */
+@Immutable
 public final class Parser {
 
     /**
@@ -42,7 +44,7 @@ public final class Parser {
     /**
      * The rule factory.
      */
-    private RuleFactory ruleFactory = new RuleFactory();
+    private final RuleFactory ruleFactory = new RuleFactory();
 
     /**
      * Parses all rules from a stream.

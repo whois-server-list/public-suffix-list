@@ -1,7 +1,7 @@
 /**
- * Public Suffix List API exceptions.
+ * Array based index with O(n) complexity.
  *
  * @author markus@malkusch.de
  * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
  */
-package de.malkusch.whoisServerList.publicSuffixList.exception;
+package de.malkusch.whoisServerList.publicSuffixList.index.array;

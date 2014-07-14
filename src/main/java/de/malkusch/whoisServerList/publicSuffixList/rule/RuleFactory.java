@@ -1,5 +1,7 @@
 package de.malkusch.whoisServerList.publicSuffixList.rule;
 
+import net.jcip.annotations.Immutable;
+
 /**
  * The rule factory.
  *
@@ -8,6 +10,7 @@ package de.malkusch.whoisServerList.publicSuffixList.rule;
  * @author markus@malkusch.de
  * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
  */
+@Immutable
 public final class RuleFactory {
 
     /**
@@ -21,9 +24,9 @@ public final class RuleFactory {
      */
     public Rule build(final String pattern) {
         boolean exceptionRule = pattern.charAt(0) == Rule.EXCEPTION_TOKEN;
+        String matchPattern = exceptionRule ? pattern.substring(1) : pattern;
 
-        Rule rule = new Rule(exceptionRule ? pattern.substring(1) : pattern);
-        rule.setExceptionRule(pattern.charAt(0) == Rule.EXCEPTION_TOKEN);
+        Rule rule = new Rule(matchPattern, exceptionRule);
 
         return rule;
     }

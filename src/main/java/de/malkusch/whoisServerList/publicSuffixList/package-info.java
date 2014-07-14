@@ -1,10 +1,8 @@
 /**
  * API for the Public Suffix List.
  *
- * Use the
- * {@link de.malkusch.whoisServerList.publicSuffixList.PublicSuffixListFactory}
- * to create a
- * {@code de.malkusch.whoisServerList.publicSuffixList.PublicSuffixList}.
+ * Use the {@link PublicSuffixListFactory}
+ * to create a {@link PublicSuffixList}.
  *
  * @author markus@malkusch.de
  * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>

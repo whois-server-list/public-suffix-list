@@ -3,8 +3,9 @@ package de.malkusch.whoisServerList.publicSuffixList;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
+
+import net.jcip.annotations.Immutable;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -30,22 +31,23 @@ import de.malkusch.whoisServerList.publicSuffixList.util.PunycodeAutoDecoder;
  * @see <a href="https://publicsuffix.org/">https://publicsuffix.org/</a>
  * @see PublicSuffixListFactory
  */
-public final class PublicSuffixList implements Iterable<Rule> {
+@Immutable
+public final class PublicSuffixList {
 
     /**
      * Public Suffix List url.
      */
-    private URL url;
+    private final URL url;
 
     /**
      * Public Suffix List encoding.
      */
-    private Charset charset;
+    private final Charset charset;
 
     /**
      * Rule index.
      */
-    private Index index;
+    private final Index index;
 
     /**
      * @see PublicSuffixListFactory#build()
@@ -53,7 +55,7 @@ public final class PublicSuffixList implements Iterable<Rule> {
      * @param url Public Suffix List url
      * @param charset Character encoding of the list
      */
-    protected PublicSuffixList(final Index index, final URL url,
+    PublicSuffixList(final Index index, final URL url,
             final Charset charset) {
 
         this.index = index;
@@ -196,11 +198,6 @@ public final class PublicSuffixList implements Iterable<Rule> {
      */
     public List<Rule> getRules() {
         return index.getRules();
-    }
-
-    @Override
-    public Iterator<Rule> iterator() {
-        return index.iterator();
     }
 
 }

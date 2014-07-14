@@ -23,26 +23,13 @@ public class RuleFactoryTest {
     @Parameters
     static public List<Rule[]> provideTestCases() {
         List<Rule[]> cases = new ArrayList<>();
-        {
-            Rule rule = new Rule("de");
-            rule.setExceptionRule(false);
-            cases.add(new Rule[]{rule});
-        }
-        {
-            Rule rule = new Rule("co.uk");
-            rule.setExceptionRule(false);
-            cases.add(new Rule[]{rule});
-        }
-        {
-            Rule rule = new Rule("*.ck");
-            rule.setExceptionRule(false);
-            cases.add(new Rule[]{rule});
-        }
-        {
-            Rule rule = new Rule("www.ck");
-            rule.setExceptionRule(true);
-            cases.add(new Rule[]{rule});
-        }
+
+        cases.add(new Rule[]{new Rule("de")});
+        cases.add(new Rule[]{new Rule("co.uk")});
+        cases.add(new Rule[]{new Rule("*.ck")});
+
+        cases.add(new Rule[]{new Rule("www.ck", true)});
+
         return cases;
     }
 

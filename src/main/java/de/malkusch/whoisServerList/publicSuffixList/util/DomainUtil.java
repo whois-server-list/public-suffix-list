@@ -2,6 +2,8 @@ package de.malkusch.whoisServerList.publicSuffixList.util;
 
 import java.util.Collection;
 
+import net.jcip.annotations.ThreadSafe;
+
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -10,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
  * @author markus@malkusch.de
  * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
  */
+@ThreadSafe
 public final class DomainUtil {
 
     /**

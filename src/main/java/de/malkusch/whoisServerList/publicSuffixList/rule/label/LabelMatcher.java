@@ -1,5 +1,7 @@
 package de.malkusch.whoisServerList.publicSuffixList.rule.label;
 
+import net.jcip.annotations.Immutable;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -14,12 +16,13 @@ import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
  * @author markus@malkusch.de
  * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
  */
+@Immutable
 public final class LabelMatcher {
 
     /**
      * The label pattern.
      */
-    private String pattern;
+    private final String pattern;
 
     /**
      * Sets the label pattern.

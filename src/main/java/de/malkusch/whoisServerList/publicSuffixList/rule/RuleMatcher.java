@@ -1,5 +1,7 @@
 package de.malkusch.whoisServerList.publicSuffixList.rule;
 
+import net.jcip.annotations.Immutable;
+
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -15,12 +17,13 @@ import de.malkusch.whoisServerList.publicSuffixList.util.DomainUtil;
  * @author markus@malkusch.de
  * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
  */
+@Immutable
 public final class RuleMatcher {
 
     /**
      * Rule labels in reversed order.
      */
-    private String[] reversedLabels;
+    private final String[] reversedLabels;
 
     /**
      * Sets the rule labels.

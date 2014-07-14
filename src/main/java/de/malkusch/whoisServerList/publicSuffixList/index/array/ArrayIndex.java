@@ -1,23 +1,36 @@
-package de.malkusch.whoisServerList.publicSuffixList.index;
+package de.malkusch.whoisServerList.publicSuffixList.index.array;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import net.jcip.annotations.Immutable;
+import de.malkusch.whoisServerList.publicSuffixList.index.Index;
 import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
 
 /**
- * List based implementation with O(n) complexity.
+ * Array based implementation with O(n) complexity.
  *
  * @author markus@malkusch.de
  * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
  */
-public final class ListIndex extends Index {
+@Immutable
+final class ArrayIndex extends Index {
 
     /**
-     * all rules.
+     * All rules.
      */
-    private List<Rule> rules;
+    private final Rule[] rules;
+
+    /**
+     * Sets the rules.
+     *
+     * @param rules  the rules, not null
+     */
+    ArrayIndex(final List<Rule> rules) {
+        this.rules = rules.toArray(new Rule[]{});
+    }
 
     @Override
     protected Collection<Rule> findRules(final String domain) {
@@ -32,13 +45,8 @@ public final class ListIndex extends Index {
     }
 
     @Override
-    public void setRules(final List<Rule> rules) {
-        this.rules = rules;
-    }
-
-    @Override
     public List<Rule> getRules() {
-        return rules;
+        return Arrays.asList(rules);
     }
 
 }
