@@ -38,6 +38,8 @@ Returns whether a domain is a public suffix or not. E.g. `"com"` is a public suf
 Returns the public suffix from a domain or null. If the domain is already a public suffix, it will be returned unchanged.
 E.g. `"www.example.net"` will return `"net"`.
 
+All methods are case insensitive.
+
 ## IDN
 
 You can use the API's methods with UTF-8 domain names or Punycode encoded ASCII domain names.

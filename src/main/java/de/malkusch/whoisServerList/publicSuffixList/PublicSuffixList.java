@@ -23,6 +23,8 @@ import de.malkusch.whoisServerList.publicSuffixList.util.PunycodeAutoDecoder;
  * the same format as the input was. I.e. if you use an UTF-8 string
  * the result will be an UTF-8 String as well. Same for Punycode.
  *
+ * The API is case insensitive.
+ *
  * @author markus@malkusch.de
  * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
  * @see <a href="https://publicsuffix.org/">https://publicsuffix.org/</a>
@@ -64,6 +66,8 @@ public final class PublicSuffixList implements Iterable<Rule> {
      *
      * E.g. "www.example.net" and "example.net" will return "example.net".
      * Null, an empty string or domains with a leading dot will return null.
+     *
+     * This method is case insensitive.
      *
      * @param domain  Domain name, null returns null
      * @return the registrable domain,
@@ -109,6 +113,8 @@ public final class PublicSuffixList implements Iterable<Rule> {
      *
      * E.g. example.net is registrable, "www.example.net" and "net" are not.
      *
+     * This method is case insensitive.
+     *
      * @param domain Domain name, not null
      * @return {@code true} if the domain is registrable
      */
@@ -125,6 +131,8 @@ public final class PublicSuffixList implements Iterable<Rule> {
      *
      * If the domain is already a public suffix, it will be returned unchanged.
      * E.g. "www.example.net" will return "net".
+     *
+     * This method is case insensitive.
      *
      * @param domain Domain name
      * @return the public suffix or {@code null} if none matched
@@ -149,6 +157,8 @@ public final class PublicSuffixList implements Iterable<Rule> {
      * Returns whether a domain is a public suffix or not.
      *
      * Example: "com" is a public suffix, "example.com" isn't.
+     *
+     * This method is case insensitive.
      *
      * @param domain Domain name, not null
      * @return {@code true} if the domain is a public suffix
