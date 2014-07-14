@@ -1,5 +1,6 @@
 package de.malkusch.whoisServerList.publicSuffixList.rule;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
 /**
@@ -8,7 +9,9 @@ import java.util.Comparator;
  * @author markus@malkusch.de
  * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
  */
-public class RuleComparator implements Comparator<Rule> {
+public class RuleComparator implements Comparator<Rule>, Serializable {
+
+	private static final long serialVersionUID = -3222683638595906734L;
 
 	@Override
 	public int compare(Rule rule1, Rule rule2) {

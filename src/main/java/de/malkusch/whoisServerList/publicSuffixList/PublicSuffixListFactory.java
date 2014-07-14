@@ -1,6 +1,7 @@
 package de.malkusch.whoisServerList.publicSuffixList;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.List;
@@ -54,9 +55,11 @@ public class PublicSuffixListFactory {
 	final public static String PROPERTY_FILE = "/psl.properties";
 	
 	public Properties getDefaults() throws IOException {
-		Properties properties = new Properties();
-		properties.load(getClass().getResourceAsStream(PROPERTY_FILE));
-		return properties;
+		try (InputStream stream = getClass().getResourceAsStream(PROPERTY_FILE)) {
+			Properties properties = new Properties();
+			properties.load(stream);
+			return properties;
+		}
 	}
 
 	/**
@@ -66,12 +69,12 @@ public class PublicSuffixListFactory {
 	 * overwrite keys as required.
 	 */
 	public PublicSuffixList build(Properties properties) throws IOException, ClassNotFoundException {
-		try {
+		try (InputStream listStream = getClass().getResourceAsStream(properties.getProperty(PROPERTY_LIST_FILE))) {
 			URL url = new URL(properties.getProperty(PROPERTY_URL));
 			Charset charset = Charset.forName(properties.getProperty(PROPERTY_CHARSET));
 			
 			Parser parser = new Parser();
-			List<Rule> rules = parser.parse(getClass().getResourceAsStream(properties.getProperty(PROPERTY_LIST_FILE)), charset);
+			List<Rule> rules = parser.parse(listStream, charset);
 			
 			// add default rule
 			rules.add(Rule.DEFAULT);
