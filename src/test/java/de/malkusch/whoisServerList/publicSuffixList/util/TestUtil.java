@@ -12,24 +12,24 @@ import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
 import static de.malkusch.whoisServerList.publicSuffixList.PublicSuffixListFactory.*;
 
 public class TestUtil {
-	
-	static public Properties getDefaultProperties() throws IOException {
-		PublicSuffixListFactory factory = new PublicSuffixListFactory();
-		return factory.getDefaults();
-	}
-	
-	static public Charset getDefaultCharset() throws IOException {
-		return Charset.forName(getDefaultProperties().getProperty(PROPERTY_CHARSET));
-	}
-	
-	static public InputStream getDefaultListFile() throws IOException {
-		String file = getDefaultProperties().getProperty(PROPERTY_LIST_FILE);
-		return TestUtil.class.getResourceAsStream(file);
-	}
-	
-	static public List<Rule> getDefaultParsedRules() throws IOException {
-		Parser parser = new Parser();
-		return parser.parse(getDefaultListFile(), getDefaultCharset());
-	}
+
+    static public Properties getDefaultProperties() throws IOException {
+        PublicSuffixListFactory factory = new PublicSuffixListFactory();
+        return factory.getDefaults();
+    }
+
+    static public Charset getDefaultCharset() throws IOException {
+        return Charset.forName(getDefaultProperties().getProperty(PROPERTY_CHARSET));
+    }
+
+    static public InputStream getDefaultListFile() throws IOException {
+        String file = getDefaultProperties().getProperty(PROPERTY_LIST_FILE);
+        return TestUtil.class.getResourceAsStream(file);
+    }
+
+    static public List<Rule> getDefaultParsedRules() throws IOException {
+        Parser parser = new Parser();
+        return parser.parse(getDefaultListFile(), getDefaultCharset());
+    }
 
 }
