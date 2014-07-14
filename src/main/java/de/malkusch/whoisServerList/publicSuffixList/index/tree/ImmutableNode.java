@@ -79,7 +79,7 @@ final class ImmutableNode extends Node<ImmutableNode> {
 
         }
         for (ImmutableNode node : new ArrayList<>(nodes)) {
-            nodes.addAll(node.findNodes(labels));
+            nodes.addAll(node.findNodes(new LinkedList<>(labels)));
 
         }
         return nodes;

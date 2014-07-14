@@ -23,9 +23,20 @@ public class IndexTest {
     @Parameter
     public IndexFactory factory;
 
-    @Parameters
+    @Parameters(name = "{0}")
     public static Collection<IndexFactory[]> getIndexes() {
         return TestUtil.getTestIndexFactories();
+    }
+
+    @Test
+    public void testFindRuleFromSubtreeMatch() {
+        List<Rule> rules = TestUtil.convertRules(
+                 "b.c.d",
+                 "a.*.d");
+        Index index = factory.build(rules);
+
+        assertEquals("b.c.d", index.findRule("b.c.d").getPattern());
+        assertEquals("a.*.d", index.findRule("a.c.d").getPattern());
     }
 
     @Test
