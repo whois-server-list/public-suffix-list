@@ -11,8 +11,9 @@ import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
  * Builds an array based implementation with O(n) complexity.
  *
  * @author markus@malkusch.de
- * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
+ *
  * @see ArrayIndex
+ * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
  */
 @Immutable
 public final class ArrayIndexFactory implements IndexFactory {

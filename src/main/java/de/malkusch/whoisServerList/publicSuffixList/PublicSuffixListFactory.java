@@ -17,8 +17,9 @@ import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
  * The factory for {@code PublicSuffixList}.
  *
  * @author markus@malkusch.de
- * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
+ *
  * @see PublicSuffixList
+ * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
  */
 @Immutable
 public final class PublicSuffixListFactory {
@@ -45,8 +46,8 @@ public final class PublicSuffixListFactory {
     /**
      * Index implementation.
      *
-     * @see #PROPERTY_INDEX_FACTORY
-     * @deprecated use {@link #PROPERTY_INDEX_FACTORY}.
+     * @deprecated As of release 2.0.0,
+     *  replaced by {@link #PROPERTY_INDEX_FACTORY}.
      */
     @Deprecated
     public static final String PROPERTY_INDEX = "psl.index";
@@ -59,7 +60,6 @@ public final class PublicSuffixListFactory {
      */
     public static final String PROPERTY_INDEX_FACTORY = "psl.indexFactory";
 
-
     /**
      * Location of the default properties.
      *
@@ -68,12 +68,13 @@ public final class PublicSuffixListFactory {
     public static final String PROPERTY_FILE = "/psl.properties";
 
     /**
-     * The default properties.
+     * Gets the bundled default properties.
      *
      * The default properties are included in the jar file at /psl.properties.
-     * It uses a bundled list file and a {@code TreeIndexFactory}.
+     * It refers to the bundled Public Suffix List file
+     * and uses a {@code TreeIndexFactory}.
      *
-     * @return default {@code Properties}
+     * @return the default properties
      */
     public Properties getDefaults() {
         try (InputStream stream
@@ -95,12 +96,17 @@ public final class PublicSuffixListFactory {
      * It is a good idea to load the default properties and
      * overwrite keys as required.
      *
-     * @param properties Properties for building the {@link PublicSuffixList}.
+     * @param properties the properties for building
+     *        the {@link PublicSuffixList}.
+     * @return a public suffix list build with the properties
+     *
+     * @throws ClassNotFoundException If the property
+     *         {@link #PROPERTY_INDEX_FACTORY} is not
+     *         a {@code IndexFactory} implementation
+     * @throws IOException If the property {@link #PROPERTY_LIST_FILE} can't
+     *         be read as a file
+     *
      * @see #getDefaults()
-     * @throws ClassNotFoundException If {@link #PROPERTY_INDEX_FACTORY}
-     *  is not a {@link IndexFactory} implementation
-     * @throws IOException If {@link #PROPERTY_LIST_FILE} can't be read.
-     * @return The {@code PublicSuffixList} build with the {@code Properties}
      */
     public PublicSuffixList build(final Properties properties)
             throws IOException, ClassNotFoundException {
@@ -142,10 +148,10 @@ public final class PublicSuffixListFactory {
     /**
      * Builds a PublicSuffixList with the default properties.
      *
+     * @return a public suffix list build with the default properties
+     *
      * @see #PROPERTY_FILE
      * @see #getDefaults()
-     * @return The {@code PublicSuffixList} build
-     *  with the default {@code Properties}
      */
     public PublicSuffixList build() {
         try {

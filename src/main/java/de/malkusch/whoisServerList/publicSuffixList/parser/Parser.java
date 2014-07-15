@@ -49,9 +49,10 @@ public final class Parser {
     /**
      * Parses all rules from a stream.
      *
-     * @param stream  the stream with lines of rules, not null
+     * @param stream   the stream with lines of rules, not null
      * @param charset  the character encoding of that stream, not null
-     * @return the {@code Rule} list, not null
+     *
+     * @return the rule list, not null
      *
      * @throws IOException If reading from the stream fails
      */
@@ -80,7 +81,6 @@ public final class Parser {
      *
      * @param line  the line with one rule, may be null
      * @return the parsed {@code Rule}, or null if no rule was found
-     *
      */
     public Rule parseLine(final String line) {
         if (line == null) {

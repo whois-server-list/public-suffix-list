@@ -8,7 +8,8 @@ import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
 /**
  * Mutable tree Node.
  *
- * The tree is mutable during construction.
+ * The tree is mutable during construction
+ * in {@link TreeIndexFactory#build(java.util.List)}.
  *
  * @author markus@malkusch.de
  * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
@@ -35,9 +36,6 @@ final class MutableNode extends Node<MutableNode> {
     /**
      * Sets the rule.
      *
-     * This is done only once during building the tree in
-     * {@code TreeIndexFactory#build(java.util.List)}.
-     *
      * @param rule  the rule, may be null
      */
     void setRule(final Rule rule) {
@@ -57,11 +55,9 @@ final class MutableNode extends Node<MutableNode> {
      * Returns the node for a rule pattern.
      *
      * If the node and its path doesn't exist yet, it will be created.
-     * This is done only during building the tree in
-     * {@code TreeIndexFactory#build(java.util.List)}.
      *
-     * @param rulePattern rule pattern, not null
-     * @return the {@code Node}, not null
+     * @param rulePattern  the rule pattern, not null
+     * @return the node, not null
      */
     MutableNode getOrCreateDescendant(final String rulePattern) {
         return getOrCreateDescendant(convertDomain(rulePattern));
@@ -71,11 +67,9 @@ final class MutableNode extends Node<MutableNode> {
      * Returns the node for rule labels.
      *
      * If the node and its path doesn't exist yet, it will be created.
-     * This is done only during building the tree in
-     * {@code TreeIndexFactory#build(java.util.List)}.
      *
-     * @param labels rule labels, not null
-     * @return the {@code Node}, not null
+     * @param labels  the rule labels, not null
+     * @return the node, not null
      */
     private MutableNode getOrCreateDescendant(final Deque<String> labels) {
         if (labels.isEmpty()) {
@@ -90,8 +84,6 @@ final class MutableNode extends Node<MutableNode> {
      * Returns the child for a label.
      *
      * If the child doesn't exist yet, it will be created.
-     * This is done only during building the tree in
-     * {@code TreeIndexFactory#build(java.util.List)}.
      *
      * @param childLabel  the rule label, not null
      * @return the child, not null

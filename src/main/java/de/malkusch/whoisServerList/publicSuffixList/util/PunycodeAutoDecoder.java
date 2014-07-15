@@ -64,7 +64,7 @@ public final class PunycodeAutoDecoder {
      *
      * The original format is determined in {@link #decode(String)}.
      *
-     * @return  true if the original format was Punnycode ASCII
+     * @return {@code true} if the original format was Punnycode ASCII
      */
     public boolean isConverted() {
         return decoded;

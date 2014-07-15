@@ -6,9 +6,9 @@ import com.carrotsearch.junitbenchmarks.IResultsConsumer;
 import com.carrotsearch.junitbenchmarks.Result;
 
 public class NoopConsumer implements IResultsConsumer {
-    
+
     public final static NoopConsumer INSTANCE = new NoopConsumer();
-    
+
     private NoopConsumer() {
     }
 

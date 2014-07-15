@@ -6,7 +6,7 @@ import net.jcip.annotations.ThreadSafe;
 import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
 
 /**
- * The index factory.
+ * The index factory builds an {@code Index}.
  *
  * @author markus@malkusch.de
  * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>

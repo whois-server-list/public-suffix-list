@@ -29,9 +29,9 @@ final class ImmutableNode extends Node<ImmutableNode> {
     /**
      * Initializes the node.
      *
-     * @param label  the domain label, may be null for the root
+     * @param label     the domain label, may be null for the root
      * @param children  the children, not null
-     * @param rule the rule, may be null
+     * @param rule      the rule, may be null
      */
     ImmutableNode(final String label,
             final Map<String, ImmutableNode> children, final Rule rule) {
@@ -49,7 +49,7 @@ final class ImmutableNode extends Node<ImmutableNode> {
      * Finds a list of nodes which match the domain.
      *
      * @param domain  the domain name, may be null
-     * @return  the {@code Node}s, not null
+     * @return the nodes, not null
      */
     Collection<ImmutableNode> findNodes(final String domain) {
         return findNodes(convertDomain(domain));
@@ -59,7 +59,7 @@ final class ImmutableNode extends Node<ImmutableNode> {
      * Finds a list of nodes which match the domain labels.
      *
      * @param labels  the domain labels, not null
-     * @return  the {@code Node}s, not null
+     * @return the nodes, not null
      */
     Collection<ImmutableNode> findNodes(final Deque<String> labels) {
         Collection<ImmutableNode> nodes = new LinkedList<>();

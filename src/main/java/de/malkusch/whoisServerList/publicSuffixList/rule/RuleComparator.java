@@ -12,15 +12,17 @@ import net.jcip.annotations.Immutable;
  * prevailing rule. An exception rule is always the prevailing rule.
  *
  * @author markus@malkusch.de
- * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
+ *
  * @see Rule#isExceptionRule()
  * @see Rule#getLabelCount()
+ * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
  */
 @Immutable
 public final class RuleComparator implements Comparator<Rule>, Serializable {
 
     /**
      * Version number.
+     *
      * @see Serializable
      */
     private static final long serialVersionUID = -3222683638595906734L;

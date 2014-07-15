@@ -34,22 +34,22 @@ public abstract class Index {
      * This list may not include all matching rules, but must include the
      * prevailing rule.
      *
-     * @param domain  domain name, may be null
-     * @return list of matching rules, not null.
+     * @param domain  the domain name, may be null
+     * @return the list of matching rules, not null.
      */
     protected abstract Collection<Rule> findRules(String domain);
 
     /**
      * Returns all rules of this index.
      *
-     * @return all rules, not null
+     * @return the rules, not null
      */
     public abstract List<Rule> getRules();
 
     /**
      * Finds the prevailing rule.
      *
-     * @param domain  Domain name, null returns null
+     * @param domain  the domain name, null returns null
      * @return the prevailing rule, null if no rule matches
      */
     public final Rule findRule(final String domain) {

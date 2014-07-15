@@ -27,7 +27,7 @@ import de.malkusch.whoisServerList.publicSuffixList.util.TestUtil;
 
 @RunWith(Parameterized.class)
 public class GetRegistrableDomainTest {
-    
+
     @Rule
     public TestRule benchmark = new BenchmarkRule(NoopConsumer.INSTANCE);
 
@@ -37,11 +37,11 @@ public class GetRegistrableDomainTest {
     @Parameters
     static public Collection<PublicSuffixList[]> getTestLists() throws IOException, ClassNotFoundException {
         List<PublicSuffixList[]> cases = new ArrayList<>();
-        
+
         for (Properties properties : PublicSuffixListTest.getPropertyCases()) {
             cases.add(new PublicSuffixList[]{
                     new PublicSuffixListFactory().build(properties)});
-            
+
         }
         return cases;
     }
@@ -54,7 +54,7 @@ public class GetRegistrableDomainTest {
         for (String[] tupel : TestUtil.getCheckPublicSuffixCases()) {
             String domain = tupel[0];
             String registrableDomain = tupel[1];
-            
+
             String actual = StringUtils.lowerCase(psl.getRegistrableDomain(domain));
             String expected = StringUtils.lowerCase(registrableDomain);
             assertEquals(

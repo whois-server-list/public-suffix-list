@@ -15,9 +15,8 @@ import de.malkusch.whoisServerList.publicSuffixList.util.DomainUtil;
  *
  * Operations on the node are case insensitive.
  *
- * @param <T> {@code Node} implementation
- *
  * @author markus@malkusch.de
+ * @param <T> {@code Node} implementation
  * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
  */
 abstract class Node<T extends Node<T>> {
@@ -48,7 +47,7 @@ abstract class Node<T extends Node<T>> {
     /**
      * Sets the domain label and existing children.
      *
-     * @param label  the domain label, may be null for the root
+     * @param label     the domain label, may be null for the root
      * @param children  the children
      */
     Node(final String label, final Map<String, T> children) {
@@ -59,7 +58,7 @@ abstract class Node<T extends Node<T>> {
     /**
      * Returns a child.
      *
-     * @param childLabel  case insensitive domain label, null returns null
+     * @param childLabel  the case insensitive domain label, null returns null
      * @return the child, or null if the child doesn't exist
      */
     T getChild(final String childLabel) {
@@ -99,9 +98,9 @@ abstract class Node<T extends Node<T>> {
     /**
      * Adds a child to a children map of a parent node.
      *
-     * @param child  the new child, not null
+     * @param child     the new child, not null
      * @param children  the children map of the parent, not null
-     * @param <T> {@code Node} implementation
+     * @param <T>       the {@code Node} implementation
      */
     static <T extends Node<T>> void addChild(
             final T child, final Map<String, T> children) {
@@ -119,8 +118,8 @@ abstract class Node<T extends Node<T>> {
     /**
      * Returns the wildcard child.
      *
-     * @see Rule#WILDCARD
      * @return the wildcard, may be null.
+     * @see Rule#WILDCARD
      */
     T getWildcard() {
         return children.get(Rule.WILDCARD);

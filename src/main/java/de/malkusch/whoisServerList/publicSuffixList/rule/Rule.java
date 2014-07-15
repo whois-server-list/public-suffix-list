@@ -53,7 +53,7 @@ public final class Rule {
      *
      * The pattern has no more exception token!
      *
-     * @param pattern  the rule matching pattern
+     * @param pattern  the rule matching pattern, not null
      */
     public Rule(final String pattern) {
         this(pattern, false);
@@ -64,7 +64,7 @@ public final class Rule {
      *
      * The pattern has no more exception token!
      *
-     * @param pattern  the rule matching pattern
+     * @param pattern        the rule matching pattern, not null
      * @param exceptionRule  whether this is an exception rule
      */
     public Rule(final String pattern, final boolean exceptionRule) {
@@ -78,6 +78,7 @@ public final class Rule {
      * The label count is used for determining the prevailing rule.
      *
      * @return the label count
+     *
      * @see RuleComparator
      * @see Index#findRule(String)
      */
@@ -117,7 +118,7 @@ public final class Rule {
      *
      * Exception rules are always prevailing rules.
      *
-     * @return true if this is an exception rule
+     * @return {@code true} if this is an exception rule
      */
     public boolean isExceptionRule() {
         return exceptionRule;

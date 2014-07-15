@@ -30,25 +30,25 @@ public class TestUtil {
 
     private TestUtil() {
     }
-    
+
     /**
      * Returns the list of Mozilla's checkPublicSuffix test cases.
-     * 
+     *
      * @return the list with the tupel (domain, registrableDomain)
      * @throws IOException if reading the test cases fails
      */
     public static List<String[]> getCheckPublicSuffixCases() throws IOException {
         List<String[]> cases = new ArrayList<>();
-        
-        InputStream stream 
+
+        InputStream stream
             = GetRegistrableDomainTest.class.getResourceAsStream("/checkPublicSuffix.txt");
-        
+
         BufferedReader reader
             = new BufferedReader(new InputStreamReader(stream));
-        
-        Pattern pattern 
+
+        Pattern pattern
             = Pattern.compile("^checkPublicSuffix\\((\\S+),\\s*(\\S+)\\);\\s*$");
-        
+
         String line;
         while((line = reader.readLine()) != null) {
             Matcher matcher = pattern.matcher(line);
@@ -60,11 +60,11 @@ public class TestUtil {
             String registrableDomain = parseArgument(matcher.group(2));
 
             cases.add(new String[]{ domain, registrableDomain });
-            
+
         }
         return cases;
     }
-    
+
     static private String parseArgument(String argument) {
         if (argument.equals("null")) {
             return null;

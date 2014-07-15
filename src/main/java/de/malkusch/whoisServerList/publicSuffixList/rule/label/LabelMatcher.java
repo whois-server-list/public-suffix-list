@@ -44,7 +44,7 @@ public final class LabelMatcher {
      * Empty labels or null never match. Matching is case insensitive.
      *
      * @param label  the label, may be null
-     * @return  true if the label matches
+     * @return {@code true} if the label matches
      */
     public boolean isMatch(final String label) {
         if (StringUtils.isEmpty(label)) {
