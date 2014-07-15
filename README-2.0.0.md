@@ -65,6 +65,8 @@ assertFalse(suffixList.isRegistrable("net"));
 assertNull(suffixList.getRegistrableDomain("net"));
 assertEquals("example.net", suffixList.getRegistrableDomain("example.net"));
 assertEquals("example.net", suffixList.getRegistrableDomain("www.example.net"));
+assertEquals("example.co.uk", suffixList.getRegistrableDomain("example.co.uk"));
+assertEquals("example.co.uk", suffixList.getRegistrableDomain("www.example.co.uk"));
 
 assertEquals("食狮.com.cn", suffixList.getRegistrableDomain("食狮.com.cn"));
 assertEquals("xn--85x722f.com.cn", suffixList.getRegistrableDomain("xn--85x722f.com.cn"));
