@@ -36,7 +36,7 @@ public class FindRuleNonDetermenisticConcurrentTest {
 
     @BenchmarkOptions(
             benchmarkRounds = 5000,
-            concurrency = BenchmarkOptions.CONCURRENCY_AVAILABLE_CORES * 10)
+            concurrency = BenchmarkOptions.CONCURRENCY_AVAILABLE_CORES)
     @Test
     public void benchmarkFindRule() throws Exception {
         assertEquals(

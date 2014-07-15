@@ -48,7 +48,7 @@ public class GetRegistrableDomainTest {
 
     @BenchmarkOptions(
             benchmarkRounds = 10000,
-            concurrency = BenchmarkOptions.CONCURRENCY_AVAILABLE_CORES * 10)
+            concurrency = BenchmarkOptions.CONCURRENCY_AVAILABLE_CORES)
     @Test
     public void testGetRegistrableDomain() throws IOException {
         for (String[] tupel : TestUtil.getCheckPublicSuffixCases()) {
