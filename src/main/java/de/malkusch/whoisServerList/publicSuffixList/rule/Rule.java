@@ -20,13 +20,6 @@ import de.malkusch.whoisServerList.publicSuffixList.util.DomainUtil;
 public final class Rule {
 
     /**
-     * The default rule ("*").
-     *
-     * This rule applies if no other rule did match.
-     */
-    public static final Rule DEFAULT = new Rule("*");
-
-    /**
      * The exception token.
      *
      * An exception rule begins with "!".
@@ -37,6 +30,13 @@ public final class Rule {
      * The wildcard label.
      */
     public static final String WILDCARD = "*";
+
+    /**
+     * The default rule ("*").
+     *
+     * This rule applies if no other rule did match.
+     */
+    public static final Rule DEFAULT = new Rule(WILDCARD);
 
     /**
      * The rule matcher.

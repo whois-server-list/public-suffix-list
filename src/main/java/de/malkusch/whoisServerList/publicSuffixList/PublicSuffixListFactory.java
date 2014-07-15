@@ -47,7 +47,7 @@ public final class PublicSuffixListFactory {
      * Index implementation.
      *
      * @deprecated As of release 2.0.0,
-     *  replaced by {@link #PROPERTY_INDEX_FACTORY}.
+     *             replaced by {@link #PROPERTY_INDEX_FACTORY}.
      */
     @Deprecated
     public static final String PROPERTY_INDEX = "psl.index";
@@ -85,7 +85,7 @@ public final class PublicSuffixListFactory {
             return properties;
 
         } catch (IOException e) {
-            throw new IllegalStateException(e);
+            throw new RuntimeException(e);
 
         }
     }
@@ -140,7 +140,7 @@ public final class PublicSuffixListFactory {
             return list;
 
         } catch (InstantiationException | IllegalAccessException e) {
-            throw new IllegalStateException(e);
+            throw new RuntimeException(e);
 
         }
     }
@@ -158,7 +158,7 @@ public final class PublicSuffixListFactory {
             return build(getDefaults());
 
         } catch (ClassNotFoundException | IOException e) {
-            throw new IllegalStateException(e);
+            throw new RuntimeException(e);
 
         }
     }
