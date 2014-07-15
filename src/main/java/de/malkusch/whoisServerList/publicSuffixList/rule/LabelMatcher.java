@@ -1,12 +1,10 @@
-package de.malkusch.whoisServerList.publicSuffixList.rule.label;
+package de.malkusch.whoisServerList.publicSuffixList.rule;
 
 import net.jcip.annotations.Immutable;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-
-import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
 
 /**
  * The label matcher.
@@ -17,7 +15,7 @@ import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
  * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
  */
 @Immutable
-public final class LabelMatcher {
+final class LabelMatcher {
 
     /**
      * The label pattern.
@@ -29,13 +27,8 @@ public final class LabelMatcher {
      *
      * @param pattern  the label pattern, not null
      */
-    public LabelMatcher(final String pattern) {
+    LabelMatcher(final String pattern) {
         this.pattern = pattern;
-    }
-
-    @Override
-    public String toString() {
-        return pattern;
     }
 
     /**
@@ -46,7 +39,7 @@ public final class LabelMatcher {
      * @param label  the label, may be null
      * @return {@code true} if the label matches
      */
-    public boolean isMatch(final String label) {
+    boolean isMatch(final String label) {
         if (StringUtils.isEmpty(label)) {
             return false;
 
@@ -66,6 +59,11 @@ public final class LabelMatcher {
     @Override
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this);
+    }
+
+    @Override
+    public String toString() {
+        return pattern;
     }
 
 }

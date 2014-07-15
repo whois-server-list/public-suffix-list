@@ -1,4 +1,4 @@
-package de.malkusch.whoisServerList.publicSuffixList.test.index;
+package de.malkusch.whoisServerList.publicSuffixList.index;
 
 import static org.junit.Assert.assertEquals;
 
@@ -17,7 +17,7 @@ import org.junit.runners.Parameterized.Parameters;
 import de.malkusch.whoisServerList.publicSuffixList.index.Index;
 import de.malkusch.whoisServerList.publicSuffixList.index.IndexFactory;
 import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
-import de.malkusch.whoisServerList.publicSuffixList.util.TestUtil;
+import de.malkusch.whoisServerList.publicSuffixList.test.util.TestUtil;
 
 @RunWith(Parameterized.class)
 public class IndexFactoryTest {

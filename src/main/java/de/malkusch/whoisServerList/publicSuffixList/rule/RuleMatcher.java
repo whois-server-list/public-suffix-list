@@ -6,7 +6,6 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import de.malkusch.whoisServerList.publicSuffixList.rule.label.LabelMatcher;
 import de.malkusch.whoisServerList.publicSuffixList.util.DomainUtil;
 
 /**
@@ -18,7 +17,7 @@ import de.malkusch.whoisServerList.publicSuffixList.util.DomainUtil;
  * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
  */
 @Immutable
-public final class RuleMatcher {
+final class RuleMatcher {
 
     /**
      * Rule labels in reversed order.
@@ -32,7 +31,7 @@ public final class RuleMatcher {
      *
      * @param labels  the rule labels, not null
      */
-    public RuleMatcher(final String[] labels) {
+    RuleMatcher(final String[] labels) {
         this.reversedLabels = labels.clone();
         ArrayUtils.reverse(reversedLabels);
     }
@@ -44,7 +43,7 @@ public final class RuleMatcher {
      *
      * @param pattern  the rule pattern, not null
      */
-    public RuleMatcher(final String pattern) {
+    RuleMatcher(final String pattern) {
         this(DomainUtil.splitLabels(pattern));
     }
 
@@ -56,7 +55,7 @@ public final class RuleMatcher {
      * @param domain  the domain name, may be null
      * @return the matched public suffix or null
      */
-    public String match(final String domain) {
+    String match(final String domain) {
         if (domain == null) {
             return null;
 
@@ -95,7 +94,7 @@ public final class RuleMatcher {
      *
      * @return the rule pattern, not null
      */
-    public String getPattern() {
+    String getPattern() {
         String[] labels = reversedLabels.clone();
         ArrayUtils.reverse(labels);
         return DomainUtil.joinLabels(labels);

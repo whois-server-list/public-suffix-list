@@ -1,4 +1,4 @@
-package de.malkusch.whoisServerList.publicSuffixList.test.rule;
+package de.malkusch.whoisServerList.publicSuffixList.rule;
 
 import static org.junit.Assert.assertEquals;
 

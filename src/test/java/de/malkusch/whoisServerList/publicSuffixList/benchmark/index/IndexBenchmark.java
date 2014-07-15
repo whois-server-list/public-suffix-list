@@ -16,7 +16,7 @@ import com.carrotsearch.junitbenchmarks.BenchmarkOptions;
 import com.carrotsearch.junitbenchmarks.BenchmarkRule;
 
 import de.malkusch.whoisServerList.publicSuffixList.index.Index;
-import de.malkusch.whoisServerList.publicSuffixList.util.TestUtil;
+import de.malkusch.whoisServerList.publicSuffixList.test.util.TestUtil;
 
 @RunWith(Parameterized.class)
 public class IndexBenchmark {

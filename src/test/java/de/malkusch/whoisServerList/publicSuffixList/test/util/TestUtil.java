@@ -1,4 +1,4 @@
-package de.malkusch.whoisServerList.publicSuffixList.util;
+package de.malkusch.whoisServerList.publicSuffixList.test.util;
 
 import static de.malkusch.whoisServerList.publicSuffixList.PublicSuffixListFactory.PROPERTY_CHARSET;
 import static de.malkusch.whoisServerList.publicSuffixList.PublicSuffixListFactory.PROPERTY_LIST_FILE;
@@ -16,6 +16,7 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import de.malkusch.whoisServerList.publicSuffixList.GetRegistrableDomainTest;
 import de.malkusch.whoisServerList.publicSuffixList.PublicSuffixListFactory;
 import de.malkusch.whoisServerList.publicSuffixList.index.Index;
 import de.malkusch.whoisServerList.publicSuffixList.index.IndexFactory;
@@ -24,7 +25,6 @@ import de.malkusch.whoisServerList.publicSuffixList.index.tree.TreeIndexFactory;
 import de.malkusch.whoisServerList.publicSuffixList.parser.Parser;
 import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
 import de.malkusch.whoisServerList.publicSuffixList.rule.RuleFactory;
-import de.malkusch.whoisServerList.publicSuffixList.test.GetRegistrableDomainTest;
 
 public class TestUtil {
 

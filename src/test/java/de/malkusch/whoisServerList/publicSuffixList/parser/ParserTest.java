@@ -1,4 +1,4 @@
-package de.malkusch.whoisServerList.publicSuffixList.test.parser;
+package de.malkusch.whoisServerList.publicSuffixList.parser;
 
 import static org.junit.Assert.*;
 

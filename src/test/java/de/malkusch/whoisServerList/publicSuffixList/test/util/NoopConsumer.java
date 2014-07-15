@@ -1,4 +1,4 @@
-package de.malkusch.whoisServerList.publicSuffixList.util;
+package de.malkusch.whoisServerList.publicSuffixList.test.util;
 
 import java.io.IOException;
 

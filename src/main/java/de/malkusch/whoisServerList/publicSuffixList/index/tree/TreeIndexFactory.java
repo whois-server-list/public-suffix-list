@@ -13,6 +13,7 @@ import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
  * Builds a tree based implementation with O(log(n)) complexity.
  *
  * @author markus@malkusch.de
+ *
  * @see TreeIndex
  * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
  */
@@ -34,7 +35,7 @@ public final class TreeIndexFactory implements IndexFactory {
      * Converts a {@code MutableNode} into an {@code ImmutableNode}.
      *
      * @param node  the mutable node, not null
-     * @return converted immutable node, not null
+     * @return the converted immutable node, not null
      */
     private ImmutableNode convert(final MutableNode node) {
         Map<String, ImmutableNode> convertedChildren = new HashMap<>();

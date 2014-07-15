@@ -1,4 +1,4 @@
-package de.malkusch.whoisServerList.publicSuffixList.test.index;
+package de.malkusch.whoisServerList.publicSuffixList.index;
 
 import static org.junit.Assert.assertEquals;
 
@@ -17,8 +17,8 @@ import com.carrotsearch.junitbenchmarks.BenchmarkOptions;
 import com.carrotsearch.junitbenchmarks.BenchmarkRule;
 
 import de.malkusch.whoisServerList.publicSuffixList.index.Index;
-import de.malkusch.whoisServerList.publicSuffixList.util.NoopConsumer;
-import de.malkusch.whoisServerList.publicSuffixList.util.TestUtil;
+import de.malkusch.whoisServerList.publicSuffixList.test.util.NoopConsumer;
+import de.malkusch.whoisServerList.publicSuffixList.test.util.TestUtil;
 
 @RunWith(Parameterized.class)
 public class FindRuleNonDetermenisticConcurrentTest {

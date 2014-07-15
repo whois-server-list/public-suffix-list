@@ -1,4 +1,4 @@
-package de.malkusch.whoisServerList.publicSuffixList.test.rule;
+package de.malkusch.whoisServerList.publicSuffixList.rule;
 
 import java.util.ArrayList;
 import java.util.List;

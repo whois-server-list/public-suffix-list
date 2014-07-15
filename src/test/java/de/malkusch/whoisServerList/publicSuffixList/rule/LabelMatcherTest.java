@@ -1,4 +1,4 @@
-package de.malkusch.whoisServerList.publicSuffixList.test.rule.label;
+package de.malkusch.whoisServerList.publicSuffixList.rule;
 
 import static org.junit.Assert.*;
 
@@ -11,7 +11,7 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
-import de.malkusch.whoisServerList.publicSuffixList.rule.label.LabelMatcher;
+import de.malkusch.whoisServerList.publicSuffixList.rule.LabelMatcher;
 
 @RunWith(Parameterized.class)
 public class LabelMatcherTest {
