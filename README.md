@@ -1,6 +1,6 @@
 # Public Suffix List API
 
-This is a Java API for the [Public Suffix List](https://publicsuffix.org/).
+This is a thread-safe Java API for the [Public Suffix List](https://publicsuffix.org/).
 The semantic of the API keeps up with the specification of the Public Suffix List.
 
 
@@ -12,7 +12,7 @@ This package is available in Maven central:
 <dependency>
 	<groupId>de.malkusch.whois-server-list</groupId>
 	<artifactId>public-suffix-list</artifactId>
-	<version>1.0.0</version>
+	<version>2.0.0</version>
 </dependency>
 ```
 
