@@ -1,8 +1,7 @@
 de.malkusch.whoisServerList.publicSuffixList
-de.malkusch.whoisServerList.publicSuffixList.exception
 de.malkusch.whoisServerList.publicSuffixList.index
+de.malkusch.whoisServerList.publicSuffixList.index.array
 de.malkusch.whoisServerList.publicSuffixList.index.tree
 de.malkusch.whoisServerList.publicSuffixList.parser
 de.malkusch.whoisServerList.publicSuffixList.rule
-de.malkusch.whoisServerList.publicSuffixList.rule.label
 de.malkusch.whoisServerList.publicSuffixList.util
