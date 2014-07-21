@@ -10,7 +10,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.jcip.annotations.Immutable;
+import javax.annotation.concurrent.Immutable;
+
 import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
 import de.malkusch.whoisServerList.publicSuffixList.rule.RuleFactory;
 

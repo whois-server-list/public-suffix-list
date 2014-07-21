@@ -5,7 +5,7 @@ import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.List;
 
-import net.jcip.annotations.Immutable;
+import javax.annotation.concurrent.Immutable;
 
 import org.apache.commons.lang3.StringUtils;
 

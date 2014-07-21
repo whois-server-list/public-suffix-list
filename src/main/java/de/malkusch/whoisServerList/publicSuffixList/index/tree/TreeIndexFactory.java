@@ -4,7 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.jcip.annotations.Immutable;
+import javax.annotation.concurrent.Immutable;
+
 import de.malkusch.whoisServerList.publicSuffixList.index.Index;
 import de.malkusch.whoisServerList.publicSuffixList.index.IndexFactory;
 import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;

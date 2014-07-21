@@ -7,7 +7,8 @@ import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Properties;
 
-import net.jcip.annotations.Immutable;
+import javax.annotation.concurrent.Immutable;
+
 import de.malkusch.whoisServerList.publicSuffixList.index.Index;
 import de.malkusch.whoisServerList.publicSuffixList.index.IndexFactory;
 import de.malkusch.whoisServerList.publicSuffixList.parser.Parser;

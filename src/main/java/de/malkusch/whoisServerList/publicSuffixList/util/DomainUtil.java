@@ -2,7 +2,7 @@ package de.malkusch.whoisServerList.publicSuffixList.util;
 
 import java.util.Collection;
 
-import net.jcip.annotations.ThreadSafe;
+import javax.annotation.concurrent.ThreadSafe;
 
 import org.apache.commons.lang3.StringUtils;
 

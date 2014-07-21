@@ -2,7 +2,7 @@ package de.malkusch.whoisServerList.publicSuffixList.util;
 
 import java.net.IDN;
 
-import net.jcip.annotations.NotThreadSafe;
+import javax.annotation.concurrent.NotThreadSafe;
 
 /**
  * Automatic Punycode Codec.

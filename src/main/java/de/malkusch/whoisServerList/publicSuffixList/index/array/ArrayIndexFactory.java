@@ -2,7 +2,8 @@ package de.malkusch.whoisServerList.publicSuffixList.index.array;
 
 import java.util.List;
 
-import net.jcip.annotations.Immutable;
+import javax.annotation.concurrent.Immutable;
+
 import de.malkusch.whoisServerList.publicSuffixList.index.Index;
 import de.malkusch.whoisServerList.publicSuffixList.index.IndexFactory;
 import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;

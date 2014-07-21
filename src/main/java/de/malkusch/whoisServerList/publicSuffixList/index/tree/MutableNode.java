@@ -2,7 +2,8 @@ package de.malkusch.whoisServerList.publicSuffixList.index.tree;
 
 import java.util.Deque;
 
-import net.jcip.annotations.NotThreadSafe;
+import javax.annotation.concurrent.NotThreadSafe;
+
 import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
 
 /**

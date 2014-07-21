@@ -2,7 +2,8 @@ package de.malkusch.whoisServerList.publicSuffixList.index;
 
 import java.util.List;
 
-import net.jcip.annotations.ThreadSafe;
+import javax.annotation.concurrent.ThreadSafe;
+
 import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
 
 /**

@@ -3,7 +3,7 @@ package de.malkusch.whoisServerList.publicSuffixList.rule;
 import java.io.Serializable;
 import java.util.Comparator;
 
-import net.jcip.annotations.Immutable;
+import javax.annotation.concurrent.Immutable;
 
 /**
  * Orders prevailing rules higher.

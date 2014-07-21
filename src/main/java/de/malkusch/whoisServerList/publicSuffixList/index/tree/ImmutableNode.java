@@ -7,7 +7,8 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Map;
 
-import net.jcip.annotations.Immutable;
+import javax.annotation.concurrent.Immutable;
+
 import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
 
 /**

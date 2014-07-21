@@ -1,6 +1,6 @@
 package de.malkusch.whoisServerList.publicSuffixList.rule;
 
-import net.jcip.annotations.Immutable;
+import javax.annotation.concurrent.Immutable;
 
 /**
  * The rule factory.

@@ -5,7 +5,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import net.jcip.annotations.Immutable;
+import javax.annotation.concurrent.Immutable;
+
 import de.malkusch.whoisServerList.publicSuffixList.index.Index;
 import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
 

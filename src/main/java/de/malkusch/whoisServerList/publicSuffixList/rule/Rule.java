@@ -2,7 +2,7 @@ package de.malkusch.whoisServerList.publicSuffixList.rule;
 
 import java.util.Arrays;
 
-import net.jcip.annotations.Immutable;
+import javax.annotation.concurrent.Immutable;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
