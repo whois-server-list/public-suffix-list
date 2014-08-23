@@ -75,7 +75,7 @@ assertEquals("xn--85x722f.com.cn", suffixList.getRegistrableDomain("xn--85x722f.
 
 # License and author
 
-Markus Malkusch <markus@malkusch.de> is the author of this project. This project is free and under the GPL.
+Markus Malkusch <markus@malkusch.de> is the author of this project. This project is free and under the WTFPL.
 
 ## Donations
 
