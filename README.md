@@ -1,7 +1,9 @@
 # Public Suffix List API
 
-This is a thread-safe Java API for the [Public Suffix List](https://publicsuffix.org/).
-The semantic of the API keeps up with the specification of the Public Suffix List.
+This is a thread-safe Java API for Mozilla's [Public Suffix List](https://publicsuffix.org/):
+
+> A "public suffix" is one under which Internet users can directly register names.
+> Some examples of public suffixes are .com, .co.uk and pvt.k12.ma.us.
 
 
 # Installation
@@ -70,6 +72,23 @@ assertEquals("example.co.uk", suffixList.getRegistrableDomain("www.example.co.uk
 
 assertEquals("食狮.com.cn", suffixList.getRegistrableDomain("食狮.com.cn"));
 assertEquals("xn--85x722f.com.cn", suffixList.getRegistrableDomain("xn--85x722f.com.cn"));
+```
+
+
+# Public Suffix List update
+
+This library comes with a bundled list which is most likely out dated. You are
+encouraged to follow Mozilla's [Atom change feed ](http://hg.mozilla.org/mozilla-central/atom-log/default/netwerk/dns/effective_tld_names.dat)
+and use the latest [`effective_tld_names.dat`](https://publicsuffix.org/list/effective_tld_names.dat).
+You can specify a custom path to your latest list by setting the property [`PROPERTY_LIST_FILE`](http://whois-server-list.github.io/public-suffix-list/apidocs/de/malkusch/whoisServerList/publicSuffixList/PublicSuffixListFactory.html#PROPERTY_LIST_FILE):
+
+```java
+PublicSuffixListFactory factory = new PublicSuffixListFactory();
+
+Properties properties = factory.getDefaults();
+properties.setProperty(PublicSuffixListFactory.PROPERTY_LIST_FILE, "/effective_tld_names.dat");
+
+PublicSuffixList suffixList = factory.build(properties);
 ```
 
 
