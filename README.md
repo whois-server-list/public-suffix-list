@@ -86,11 +86,41 @@ You can specify a custom path to your latest list by setting the property [`PROP
 PublicSuffixListFactory factory = new PublicSuffixListFactory();
 
 Properties properties = factory.getDefaults();
-properties.setProperty(PublicSuffixListFactory.PROPERTY_LIST_FILE, "/effective_tld_names.dat");
+properties.setProperty(
+        PublicSuffixListFactory.PROPERTY_LIST_FILE, "/effective_tld_names.dat");
 
 PublicSuffixList suffixList = factory.build(properties);
 ```
 
+## Download Public Suffix List with Maven
+
+You can integrate the download of the latest list in your maven build process:
+
+```xml
+<build>
+    <plugins>
+        <plugin>
+            <groupId>com.googlecode.maven-download-plugin</groupId>
+            <artifactId>download-maven-plugin</artifactId>
+            <version>1.2.0</version>
+            <executions>
+                <execution>
+                    <id>package-psl</id>
+                    <phase>generate-resources</phase>
+                    <goals>
+                        <goal>wget</goal>
+                    </goals>
+                    <configuration>
+                        <url>https://publicsuffix.org/list/effective_tld_names.dat</url>
+                        <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+                        <outputFileName>effective_tld_names.dat</outputFileName>
+                    </configuration>
+                </execution>
+            <executions>
+        </plugin>
+    </plugins>
+</build>
+```
 
 # License and author
 
