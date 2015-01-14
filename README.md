@@ -116,7 +116,7 @@ You can integrate the download of the latest list in your maven build process:
                         <outputFileName>effective_tld_names.dat</outputFileName>
                     </configuration>
                 </execution>
-            <executions>
+            </executions>
         </plugin>
     </plugins>
 </build>
