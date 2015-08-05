@@ -97,7 +97,7 @@
 							<goal>wget</goal>
 						</goals>
 						<configuration>
-							<url>http://mxr.mozilla.org/mozilla-central/source/netwerk/test/unit/data/test_psl.txt?raw=1</url>
+							<url>https://raw.githubusercontent.com/publicsuffix/list/master/tests/test_psl.txt</url>
 							<outputDirectory>${project.build.directory}/test-classes</outputDirectory>
 							<outputFileName>checkPublicSuffix.txt</outputFileName>
 						</configuration>

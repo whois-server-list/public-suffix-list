@@ -72,7 +72,7 @@ public class TestUtil {
         }
         Pattern pattern = Pattern.compile("'(.+)'");
         Matcher matcher = pattern.matcher(argument);
-        assertTrue(matcher.matches());
+        assertTrue("failed to get arguments from " + argument, matcher.matches());
 
         return matcher.group(1);
     }
