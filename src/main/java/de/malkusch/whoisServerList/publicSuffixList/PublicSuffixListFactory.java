@@ -47,8 +47,8 @@ public final class PublicSuffixListFactory {
     /**
      * Index implementation.
      *
-     * @deprecated As of release 2.0.0,
-     *             replaced by {@link #PROPERTY_INDEX_FACTORY}.
+     * @deprecated As of release 2.0.0, replaced by
+     *             {@link #PROPERTY_INDEX_FACTORY}.
      */
     @Deprecated
     public static final String PROPERTY_INDEX = "psl.index";
@@ -72,14 +72,14 @@ public final class PublicSuffixListFactory {
      * Gets the bundled default properties.
      *
      * The default properties are included in the jar file at /psl.properties.
-     * It refers to the bundled Public Suffix List file
-     * and uses a {@code TreeIndexFactory}.
+     * It refers to the bundled Public Suffix List file and uses a
+     * {@code TreeIndexFactory}.
      *
      * @return the default properties
      */
     public Properties getDefaults() {
-        try (InputStream stream
-                = getClass().getResourceAsStream(PROPERTY_FILE)) {
+        try (InputStream stream = getClass()
+                .getResourceAsStream(PROPERTY_FILE)) {
 
             Properties properties = new Properties();
             properties.load(stream);
@@ -94,18 +94,19 @@ public final class PublicSuffixListFactory {
     /**
      * Builds a PublicSuffixList with custom properties.
      *
-     * It is a good idea to load the default properties and
-     * overwrite keys as required.
+     * It is a good idea to load the default properties and overwrite keys as
+     * required.
      *
-     * @param properties the properties for building
-     *        the {@link PublicSuffixList}.
+     * @param properties
+     *            the properties for building the {@link PublicSuffixList}.
      * @return a public suffix list build with the properties
      *
-     * @throws ClassNotFoundException If the property
-     *         {@link #PROPERTY_INDEX_FACTORY} is not
-     *         a {@code IndexFactory} implementation
-     * @throws IOException If the property {@link #PROPERTY_LIST_FILE} can't
-     *         be read as a file
+     * @throws ClassNotFoundException
+     *             If the property {@link #PROPERTY_INDEX_FACTORY} is not a
+     *             {@code IndexFactory} implementation
+     * @throws IOException
+     *             If the property {@link #PROPERTY_LIST_FILE} can't be read as
+     *             a file
      *
      * @see #getDefaults()
      */
@@ -113,37 +114,70 @@ public final class PublicSuffixListFactory {
             throws IOException, ClassNotFoundException {
 
         String propertyFile = properties.getProperty(PROPERTY_LIST_FILE);
-        try (InputStream listStream
-                = getClass().getResourceAsStream(propertyFile)) {
+        try (InputStream listStream = getClass()
+                .getResourceAsStream(propertyFile)) {
 
-            URL url = new URL(properties.getProperty(PROPERTY_URL));
-
-            Charset charset
-                = Charset.forName(properties.getProperty(PROPERTY_CHARSET));
-
-            Parser parser = new Parser();
-            List<Rule> rules = parser.parse(listStream, charset);
-
-            // add default rule
-            rules.add(Rule.DEFAULT);
-
-            String indexFactoryClassName
-                = properties.getProperty(PROPERTY_INDEX_FACTORY);
-            @SuppressWarnings("unchecked")
-            Class<IndexFactory> indexFactoryClass
-                = (Class<IndexFactory>) Class.forName(indexFactoryClassName);
-            IndexFactory indexFactory = indexFactoryClass.newInstance();
-
-            Index index = indexFactory.build(rules);
-
-            PublicSuffixList list = new PublicSuffixList(index, url, charset);
-
-            return list;
+            return build(listStream, properties);
 
         } catch (InstantiationException | IllegalAccessException e) {
             throw new RuntimeException(e);
-
         }
+    }
+
+    /**
+     * Builds a PublicSuffixList.
+     * 
+     * @param list
+     *            The list.
+     * @return a public suffix list
+     * @throws IOException
+     *             If the list can't be read as a file
+     */
+    public PublicSuffixList build(InputStream list) throws IOException {
+        try {
+            return build(list, getDefaults());
+        } catch (ClassNotFoundException | InstantiationException
+                | IllegalAccessException e) {
+
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Builds a PublicSuffixList.
+     * 
+     * @param list
+     *            The list.
+     * @return a public suffix list
+     */
+    private PublicSuffixList build(InputStream list, Properties properties)
+            throws IOException, ClassNotFoundException, InstantiationException,
+            IllegalAccessException {
+        URL url = new URL(properties.getProperty(PROPERTY_URL));
+
+        Charset charset = Charset
+                .forName(properties.getProperty(PROPERTY_CHARSET));
+
+        IndexFactory indexFactory = loadIndexFactory(
+                properties.getProperty(PROPERTY_INDEX_FACTORY));
+
+        return build(list, url, charset, indexFactory);
+    }
+
+    /**
+     * Loads the index factory.
+     * 
+     * @param indexFactoryClassName
+     *            the class name of the index factory.
+     * @return the index factory
+     */
+    private IndexFactory loadIndexFactory(String indexFactoryClassName)
+            throws ClassNotFoundException, InstantiationException,
+            IllegalAccessException {
+        @SuppressWarnings("unchecked")
+        Class<IndexFactory> indexFactoryClass = (Class<IndexFactory>) Class
+                .forName(indexFactoryClassName);
+        return indexFactoryClass.newInstance();
     }
 
     /**
@@ -162,6 +196,36 @@ public final class PublicSuffixListFactory {
             throw new RuntimeException(e);
 
         }
+    }
+
+    /**
+     * Builds a PublicSuffixList.
+     * 
+     * @param list
+     *            The list.
+     * @param url
+     *            The list url.
+     * @param charset
+     *            The list charset.
+     * @param indexFactory
+     *            The index factory.
+     *
+     * @return a public suffix list build with the properties
+     * @throws IOException
+     *             The list could not be read.
+     */
+    private PublicSuffixList build(final InputStream list, final URL url,
+            final Charset charset, final IndexFactory indexFactory)
+                    throws IOException {
+        Parser parser = new Parser();
+        List<Rule> rules = parser.parse(list, charset);
+
+        // add default rule
+        rules.add(Rule.DEFAULT);
+
+        Index index = indexFactory.build(rules);
+
+        return new PublicSuffixList(index, url, charset);
     }
 
 }
