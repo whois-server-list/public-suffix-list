@@ -2,6 +2,7 @@ package de.malkusch.whoisServerList.publicSuffixList;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.List;
@@ -78,8 +79,7 @@ public final class PublicSuffixListFactory {
      * @return the default properties
      */
     public Properties getDefaults() {
-        try (InputStream stream = getClass()
-                .getResourceAsStream(PROPERTY_FILE)) {
+        try (InputStream stream = getClass().getResourceAsStream(PROPERTY_FILE)) {
 
             Properties properties = new Properties();
             properties.load(stream);
@@ -110,12 +110,10 @@ public final class PublicSuffixListFactory {
      *
      * @see #getDefaults()
      */
-    public PublicSuffixList build(final Properties properties)
-            throws IOException, ClassNotFoundException {
+    public PublicSuffixList build(final Properties properties) throws IOException, ClassNotFoundException {
 
         String propertyFile = properties.getProperty(PROPERTY_LIST_FILE);
-        try (InputStream listStream = getClass()
-                .getResourceAsStream(propertyFile)) {
+        try (InputStream listStream = getClass().getResourceAsStream(propertyFile)) {
 
             return build(listStream, properties);
 
@@ -136,9 +134,34 @@ public final class PublicSuffixListFactory {
     public PublicSuffixList build(InputStream list) throws IOException {
         try {
             return build(list, getDefaults());
-        } catch (ClassNotFoundException | InstantiationException
-                | IllegalAccessException e) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
 
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Downloads the public suffix list.
+     * 
+     * @return a public suffix list
+     * @throws IOException
+     *             If the list can't be downloaded.
+     */
+    public PublicSuffixList download() throws IOException {
+        Properties properties = getDefaults();
+
+        URL url;
+        try {
+            url = new URL(properties.getProperty(PROPERTY_URL));
+
+        } catch (MalformedURLException e) {
+            throw new IllegalStateException(e);
+        }
+
+        try (InputStream listStream = url.openStream()) {
+            return build(listStream, properties);
+
+        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -151,15 +174,12 @@ public final class PublicSuffixListFactory {
      * @return a public suffix list
      */
     private PublicSuffixList build(InputStream list, Properties properties)
-            throws IOException, ClassNotFoundException, InstantiationException,
-            IllegalAccessException {
+            throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         URL url = new URL(properties.getProperty(PROPERTY_URL));
 
-        Charset charset = Charset
-                .forName(properties.getProperty(PROPERTY_CHARSET));
+        Charset charset = Charset.forName(properties.getProperty(PROPERTY_CHARSET));
 
-        IndexFactory indexFactory = loadIndexFactory(
-                properties.getProperty(PROPERTY_INDEX_FACTORY));
+        IndexFactory indexFactory = loadIndexFactory(properties.getProperty(PROPERTY_INDEX_FACTORY));
 
         return build(list, url, charset, indexFactory);
     }
@@ -172,11 +192,9 @@ public final class PublicSuffixListFactory {
      * @return the index factory
      */
     private IndexFactory loadIndexFactory(String indexFactoryClassName)
-            throws ClassNotFoundException, InstantiationException,
-            IllegalAccessException {
+            throws ClassNotFoundException, InstantiationException, IllegalAccessException {
         @SuppressWarnings("unchecked")
-        Class<IndexFactory> indexFactoryClass = (Class<IndexFactory>) Class
-                .forName(indexFactoryClassName);
+        Class<IndexFactory> indexFactoryClass = (Class<IndexFactory>) Class.forName(indexFactoryClassName);
         return indexFactoryClass.newInstance();
     }
 
@@ -214,9 +232,8 @@ public final class PublicSuffixListFactory {
      * @throws IOException
      *             The list could not be read.
      */
-    private PublicSuffixList build(final InputStream list, final URL url,
-            final Charset charset, final IndexFactory indexFactory)
-                    throws IOException {
+    private PublicSuffixList build(final InputStream list, final URL url, final Charset charset,
+            final IndexFactory indexFactory) throws IOException {
         Parser parser = new Parser();
         List<Rule> rules = parser.parse(list, charset);
 
