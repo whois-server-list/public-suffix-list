@@ -3,6 +3,7 @@ package de.malkusch.whoisServerList.publicSuffixList;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
+import java.util.Properties;
 
 import org.junit.Test;
 
@@ -34,6 +35,24 @@ public class ExampleTest {
 
         assertEquals("食狮.com.cn", suffixList.getRegistrableDomain("食狮.com.cn"));
         assertEquals("xn--85x722f.com.cn", suffixList.getRegistrableDomain("xn--85x722f.com.cn"));
+    }
+
+    @Test
+    public void testExampleWithoutWildcardRule() throws IOException, ClassNotFoundException {
+        PublicSuffixListFactory factory = new PublicSuffixListFactory();
+        Properties properties = factory.getDefaults();
+        properties.setProperty("psl.use.wildcard", "false");
+        PublicSuffixList suffixList = factory.build(properties);
+
+        assertTrue(suffixList.isPublicSuffix("net"));
+        assertFalse(suffixList.isPublicSuffix("bad"));
+
+        assertNull(suffixList.getRegistrableDomain("net"));
+        assertNull(suffixList.getRegistrableDomain("example.example"));
+        assertNull(suffixList.getRegistrableDomain("bad.bad"));
+        assertEquals("example.net", suffixList.getRegistrableDomain("www.example.net"));
+        assertEquals("example.co.uk", suffixList.getRegistrableDomain("example.co.uk"));
+        assertEquals("example.co.uk", suffixList.getRegistrableDomain("www.example.co.uk"));
     }
 
 }

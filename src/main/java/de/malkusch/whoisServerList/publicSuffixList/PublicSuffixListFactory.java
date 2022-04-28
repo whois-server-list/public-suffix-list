@@ -63,6 +63,11 @@ public final class PublicSuffixListFactory {
     public static final String PROPERTY_INDEX_FACTORY = "psl.indexFactory";
 
     /**
+     * Use wildcard rule.
+     */
+    public static final String PROPERTY_USE_WILDCARD = "psl.use.wildcard";
+
+    /**
      * Location of the default properties.
      *
      * @see #build()
@@ -124,7 +129,7 @@ public final class PublicSuffixListFactory {
 
     /**
      * Builds a PublicSuffixList.
-     * 
+     *
      * @param list
      *            The list.
      * @return a public suffix list
@@ -142,7 +147,7 @@ public final class PublicSuffixListFactory {
 
     /**
      * Downloads the public suffix list.
-     * 
+     *
      * @return a public suffix list
      * @throws IOException
      *             If the list can't be downloaded.
@@ -168,12 +173,12 @@ public final class PublicSuffixListFactory {
 
     /**
      * Builds a PublicSuffixList.
-     * 
+     *
      * @param list
      *            The list.
      * @return a public suffix list
      */
-    private PublicSuffixList build(InputStream list, Properties properties)
+    public PublicSuffixList build(InputStream list, Properties properties)
             throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         URL url = new URL(properties.getProperty(PROPERTY_URL));
 
@@ -181,12 +186,14 @@ public final class PublicSuffixListFactory {
 
         IndexFactory indexFactory = loadIndexFactory(properties.getProperty(PROPERTY_INDEX_FACTORY));
 
-        return build(list, url, charset, indexFactory);
+        boolean useDefaultRule = Boolean.parseBoolean(properties.getProperty(PROPERTY_USE_WILDCARD));
+
+        return build(list, url, charset, indexFactory, useDefaultRule);
     }
 
     /**
      * Loads the index factory.
-     * 
+     *
      * @param indexFactoryClassName
      *            the class name of the index factory.
      * @return the index factory
@@ -218,7 +225,7 @@ public final class PublicSuffixListFactory {
 
     /**
      * Builds a PublicSuffixList.
-     * 
+     *
      * @param list
      *            The list.
      * @param url
@@ -233,12 +240,14 @@ public final class PublicSuffixListFactory {
      *             The list could not be read.
      */
     private PublicSuffixList build(final InputStream list, final URL url, final Charset charset,
-            final IndexFactory indexFactory) throws IOException {
+                                   final IndexFactory indexFactory, boolean useDefaultRule) throws IOException {
         Parser parser = new Parser();
         List<Rule> rules = parser.parse(list, charset);
 
         // add default rule
-        rules.add(Rule.DEFAULT);
+        if (useDefaultRule) {
+            rules.add(Rule.DEFAULT);
+        }
 
         Index index = indexFactory.build(rules);
 
