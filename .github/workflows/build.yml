@@ -1,0 +1,14 @@
+name: Build
+on:
+  push:
+  workflow_call:
+    outputs:
+      JDK_VERSION:
+        value: ${{ jobs.build.outputs.JDK_VERSION }}
+
+jobs:
+  build:
+    uses: malkusch/github/.github/workflows/maven-build.yml@master
+    with:
+      INTEGRATION_TESTS_ENABLED: false
+

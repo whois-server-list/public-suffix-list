@@ -9,29 +9,19 @@
 	<parent>
 		<groupId>de.malkusch.parent</groupId>
 		<artifactId>oss-parent</artifactId>
-		<version>1.10</version>
+        <version>3.0.29</version>
 	</parent>
 
 	<url>https://github.com/whois-server-list/${project.artifactId}</url>
-
-	<scm>
-		<connection>scm:git:git://github.com/whois-server-list/${project.artifactId}.git</connection>
-		<developerConnection>scm:git:git@github.com:whois-server-list/${project.artifactId}.git</developerConnection>
-		<url>https://github.com/whois-server-list/${project.artifactId}</url>
-	</scm>
-
-	<issueManagement>
-		<system>github</system>
-		<url>https://github.com/whois-server-list/${project.artifactId}/issues</url>
-	</issueManagement>
-
-	<distributionManagement>
-		<site>
-			<id>github</id>
-			<name>Github</name>
-			<url>http://whois-server-list.github.io/${project.artifactId}/</url>
-		</site>
-	</distributionManagement>
+    <scm>
+        <connection>scm:git:${project.scm.url}</connection>
+        <developerConnection>scm:git:${project.scm.url}</developerConnection>
+        <url>https://github.com/whois-server-list/${project.artifactId}</url>
+        <tag>HEAD</tag>
+    </scm>
+    <properties>
+        <maven.compiler.release>8</maven.compiler.release>
+    </properties>
 
 	<dependencies>
 		<dependency>
@@ -45,6 +35,12 @@
 			<version>3.0.0</version>
 		</dependency>
 
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
 		<dependency>
 			<groupId>com.carrotsearch</groupId>
 			<artifactId>junit-benchmarks</artifactId>
