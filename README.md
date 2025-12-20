@@ -12,9 +12,9 @@ This package is available in Maven central:
 
 ```xml maven
 <dependency>
-	<groupId>de.malkusch.whois-server-list</groupId>
-	<artifactId>public-suffix-list</artifactId>
-	<version>2.2.2</version>
+  <groupId>de.malkusch.whois-server-list</groupId>
+  <artifactId>public-suffix-list</artifactId>
+  <version>2.2.3</version>
 </dependency>
 ```
 
