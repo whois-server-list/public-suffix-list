@@ -10,11 +10,11 @@ This is a thread-safe Java API for Mozilla's [Public Suffix List](https://public
 
 This package is available in Maven central:
 
-```xml
+```xml maven
 <dependency>
 	<groupId>de.malkusch.whois-server-list</groupId>
 	<artifactId>public-suffix-list</artifactId>
-	<version>2.2.0</version>
+	<version>2.2.1</version>
 </dependency>
 ```
 
