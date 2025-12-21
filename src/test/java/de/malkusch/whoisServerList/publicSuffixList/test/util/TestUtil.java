@@ -1,8 +1,14 @@
 package de.malkusch.whoisServerList.publicSuffixList.test.util;
 
-import static de.malkusch.whoisServerList.publicSuffixList.PublicSuffixListFactory.PROPERTY_CHARSET;
-import static de.malkusch.whoisServerList.publicSuffixList.PublicSuffixListFactory.PROPERTY_LIST_FILE;
-import static org.junit.Assert.assertTrue;
+import de.malkusch.whoisServerList.publicSuffixList.GetRegistrableDomainTest;
+import de.malkusch.whoisServerList.publicSuffixList.PublicSuffixListFactory;
+import de.malkusch.whoisServerList.publicSuffixList.index.Index;
+import de.malkusch.whoisServerList.publicSuffixList.index.IndexFactory;
+import de.malkusch.whoisServerList.publicSuffixList.index.array.ArrayIndexFactory;
+import de.malkusch.whoisServerList.publicSuffixList.index.tree.TreeIndexFactory;
+import de.malkusch.whoisServerList.publicSuffixList.parser.Parser;
+import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
+import de.malkusch.whoisServerList.publicSuffixList.rule.RuleFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,15 +22,9 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import de.malkusch.whoisServerList.publicSuffixList.GetRegistrableDomainTest;
-import de.malkusch.whoisServerList.publicSuffixList.PublicSuffixListFactory;
-import de.malkusch.whoisServerList.publicSuffixList.index.Index;
-import de.malkusch.whoisServerList.publicSuffixList.index.IndexFactory;
-import de.malkusch.whoisServerList.publicSuffixList.index.array.ArrayIndexFactory;
-import de.malkusch.whoisServerList.publicSuffixList.index.tree.TreeIndexFactory;
-import de.malkusch.whoisServerList.publicSuffixList.parser.Parser;
-import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
-import de.malkusch.whoisServerList.publicSuffixList.rule.RuleFactory;
+import static de.malkusch.whoisServerList.publicSuffixList.PublicSuffixListFactory.PROPERTY_CHARSET;
+import static de.malkusch.whoisServerList.publicSuffixList.PublicSuffixListFactory.PROPERTY_LIST_FILE;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestUtil {
 
@@ -41,25 +41,27 @@ public class TestUtil {
         List<String[]> cases = new ArrayList<>();
 
         InputStream stream
-            = GetRegistrableDomainTest.class.getResourceAsStream("/checkPublicSuffix.txt");
+                = GetRegistrableDomainTest.class.getResourceAsStream("/checkPublicSuffix.txt");
 
         BufferedReader reader
-            = new BufferedReader(new InputStreamReader(stream));
+                = new BufferedReader(new InputStreamReader(stream));
 
         Pattern pattern
-            = Pattern.compile("^checkPublicSuffix\\((\\S+),\\s*(\\S+)\\);\\s*$");
+                = Pattern.compile("^checkPublicSuffix\\((\\S+),\\s*(\\S+)\\);\\s*$");
 
         String line;
-        while((line = reader.readLine()) != null) {
+        while ((line = reader.readLine()) != null) {
             Matcher matcher = pattern.matcher(line);
-            if (! matcher.matches()) {
+            if (!matcher.matches()) {
                 continue;
 
             }
             String domain = parseArgument(matcher.group(1));
             String registrableDomain = parseArgument(matcher.group(2));
 
-            cases.add(new String[]{ domain, registrableDomain });
+            System.out.println("domain: " + domain+ " reg: " + registrableDomain);
+
+            cases.add(new String[]{domain, registrableDomain});
 
         }
         return cases;
@@ -72,12 +74,12 @@ public class TestUtil {
         }
         Pattern pattern = Pattern.compile("'(.+)'");
         Matcher matcher = pattern.matcher(argument);
-        assertTrue("failed to get arguments from " + argument, matcher.matches());
+        assertTrue(matcher.matches());
 
         return matcher.group(1);
     }
 
-    public static List<Rule> convertRules(String...rules) {
+    public static List<Rule> convertRules(String... rules) {
         RuleFactory factory = new RuleFactory();
         List<Rule> list = new ArrayList<>();
         for (String rule : rules) {
@@ -87,20 +89,20 @@ public class TestUtil {
         return list;
     }
 
-    public static Collection<Index[]> getTestIndexes() throws IOException {
-        Collection<Index[]> cases = new ArrayList<>();
-        for (IndexFactory[] factory : getTestIndexFactories()) {
-            cases.add(new Index[]{ factory[0].build(getDefaultParsedRules()) });
+    public static Collection<Index> getTestIndexes() throws IOException {
+        Collection<Index> cases = new ArrayList<>();
+        for (IndexFactory factory : getTestIndexFactories()) {
+            cases.add(factory.build(getDefaultParsedRules()));
 
         }
         return cases;
     }
 
-    public static Collection<IndexFactory[]> getTestIndexFactories() {
-        Collection<IndexFactory[]> cases = new ArrayList<>();
+    public static Collection<IndexFactory> getTestIndexFactories() {
+        Collection<IndexFactory> cases = new ArrayList<>();
 
-        cases.add(new IndexFactory[]{ new ArrayIndexFactory() });
-        cases.add(new IndexFactory[]{ new TreeIndexFactory() });
+        cases.add(new ArrayIndexFactory());
+        cases.add(new TreeIndexFactory());
 
         return cases;
     }
@@ -123,5 +125,4 @@ public class TestUtil {
         Parser parser = new Parser();
         return parser.parse(getDefaultListFile(), getDefaultCharset());
     }
-
 }

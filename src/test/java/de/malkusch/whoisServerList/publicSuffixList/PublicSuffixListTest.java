@@ -1,9 +1,9 @@
 package de.malkusch.whoisServerList.publicSuffixList;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import de.malkusch.whoisServerList.publicSuffixList.index.array.ArrayIndexFactory;
+import de.malkusch.whoisServerList.publicSuffixList.index.tree.TreeIndexFactory;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -12,72 +12,41 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Properties;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
+import static org.junit.jupiter.api.Assertions.*;
 
-import de.malkusch.whoisServerList.publicSuffixList.PublicSuffixList;
-import de.malkusch.whoisServerList.publicSuffixList.PublicSuffixListFactory;
-import de.malkusch.whoisServerList.publicSuffixList.index.array.ArrayIndexFactory;
-import de.malkusch.whoisServerList.publicSuffixList.index.tree.TreeIndexFactory;
-
-@RunWith(Parameterized.class)
 public class PublicSuffixListTest {
 
-    private PublicSuffixList psl;
-
-    @Parameter
-    public Properties properties;
-
-    @Parameters
-    public static Collection<Properties[]> getProperties() throws IOException {
-        Collection<Properties[]> cases = new ArrayList<>();
-
-        for (Properties properties : getPropertyCases()) {
-            cases.add(new Properties[]{properties});
-
-        }
-
-        return cases;
-    }
-
-    static public Collection<Properties> getPropertyCases() throws IOException {
-        Collection<Properties> cases = new ArrayList<>();
+    public static Collection<PublicSuffixList> PSL() throws IOException, ClassNotFoundException {
+        Collection<PublicSuffixList> cases = new ArrayList<>();
 
         Properties defaultProperties = new Properties();
         defaultProperties.load(PublicSuffixListTest.class.getResourceAsStream(PublicSuffixListFactory.PROPERTY_FILE));
-        cases.add(defaultProperties);
+        cases.add(new PublicSuffixListFactory().build(defaultProperties));
 
         Properties listIndex = new Properties(defaultProperties);
         listIndex.setProperty(
-            PublicSuffixListFactory.PROPERTY_INDEX_FACTORY,
-            ArrayIndexFactory.class.getName());
-        cases.add(listIndex);
+                PublicSuffixListFactory.PROPERTY_INDEX_FACTORY,
+                ArrayIndexFactory.class.getName());
+        cases.add(new PublicSuffixListFactory().build(listIndex));
 
         Properties treeIndex = new Properties(defaultProperties);
         listIndex.setProperty(
-            PublicSuffixListFactory.PROPERTY_INDEX_FACTORY,
-            TreeIndexFactory.class.getName());
-        cases.add(treeIndex);
+                PublicSuffixListFactory.PROPERTY_INDEX_FACTORY,
+                TreeIndexFactory.class.getName());
+        cases.add(new PublicSuffixListFactory().build(treeIndex));
 
         return cases;
     }
 
-    @Before
-    public void setPSL() throws IOException, ClassNotFoundException {
-        psl = new PublicSuffixListFactory().build(properties);
-    }
-
-    @Test
-    public void testGetURL() throws MalformedURLException {
+    @ParameterizedTest
+    @MethodSource("PSL")
+    public void testGetURL(PublicSuffixList psl) throws MalformedURLException {
         assertEquals(new URL("https://publicsuffix.org/list/effective_tld_names.dat"), psl.getURL());
     }
 
-    @Test
-    public void testGetRegistrableDomain() {
+    @ParameterizedTest
+    @MethodSource("PSL")
+    public void testGetRegistrableDomain(PublicSuffixList psl) {
         assertNull(psl.getRegistrableDomain(null));
         assertNull(psl.getRegistrableDomain(""));
         assertNull(psl.getRegistrableDomain(".net"));
@@ -93,8 +62,9 @@ public class PublicSuffixListTest {
         assertEquals("example.test.ck", psl.getRegistrableDomain("www.example.test.ck"));
     }
 
-    @Test
-    public void testIsRegistrable() {
+    @ParameterizedTest
+    @MethodSource("PSL")
+    public void testIsRegistrable(PublicSuffixList psl) {
         assertTrue(psl.isRegistrable("example.de"));
         assertTrue(psl.isRegistrable("example.uk"));
         assertTrue(psl.isRegistrable("example.co.uk"));
@@ -114,8 +84,9 @@ public class PublicSuffixListTest {
         assertFalse(psl.isRegistrable("invalid"));
     }
 
-    @Test
-    public void testGetPublicSuffix() {
+    @ParameterizedTest
+    @MethodSource("PSL")
+    public void testGetPublicSuffix(PublicSuffixList psl) {
         assertNull(psl.getPublicSuffix(""));
         assertNull(psl.getPublicSuffix(null));
 
@@ -127,8 +98,9 @@ public class PublicSuffixListTest {
         assertEquals("fallback", psl.getPublicSuffix("example.fallback"));
     }
 
-    @Test
-    public void testIsPublicSuffix() {
+    @ParameterizedTest
+    @MethodSource("PSL")
+    public void testIsPublicSuffix(PublicSuffixList psl) {
         assertTrue(psl.isPublicSuffix("de"));
         assertTrue(psl.isPublicSuffix("de"));
         assertTrue(psl.isPublicSuffix("co.uk"));
@@ -139,5 +111,4 @@ public class PublicSuffixListTest {
         assertFalse(psl.isPublicSuffix("example.net"));
         assertFalse(psl.isPublicSuffix("markus.malkusch.de"));
     }
-
 }

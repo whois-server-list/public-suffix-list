@@ -1,46 +1,38 @@
 package de.malkusch.whoisServerList.publicSuffixList.index;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
+import de.malkusch.whoisServerList.publicSuffixList.test.util.TestUtil;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Collection;
 import java.util.List;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-import de.malkusch.whoisServerList.publicSuffixList.index.Index;
-import de.malkusch.whoisServerList.publicSuffixList.index.IndexFactory;
-import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
-import de.malkusch.whoisServerList.publicSuffixList.test.util.TestUtil;
 
-@RunWith(Parameterized.class)
 public class IndexTest {
 
-    @Parameter
-    public IndexFactory factory;
-
-    @Parameters(name = "{0}")
-    public static Collection<IndexFactory[]> getIndexes() {
+    public static Collection<IndexFactory> CASES() {
         return TestUtil.getTestIndexFactories();
     }
 
-    @Test
-    public void testFindRuleFromSubtreeMatch() {
+    @ParameterizedTest
+    @MethodSource("CASES")
+    public void testFindRuleFromSubtreeMatch(IndexFactory factory) {
         List<Rule> rules = TestUtil.convertRules(
-                 "b.c.d",
-                 "a.*.d");
+                "b.c.d",
+                "a.*.d");
         Index index = factory.build(rules);
 
         assertEquals("b.c.d", index.findRule("b.c.d").getPattern());
         assertEquals("a.*.d", index.findRule("a.c.d").getPattern());
     }
 
-    @Test
-    public void testFindRule() {
+    @ParameterizedTest
+    @MethodSource("CASES")
+    public void testFindRule(IndexFactory factory) {
         List<Rule> rules = TestUtil.convertRules(
                 "net",
                 "com",
@@ -69,5 +61,4 @@ public class IndexTest {
         assertEquals("www.ck", index.findRule("www.ck").getPattern());
         assertEquals("www.ck", index.findRule("x.www.ck").getPattern());
     }
-
 }

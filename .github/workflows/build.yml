@@ -11,4 +11,5 @@ jobs:
     uses: malkusch/github/.github/workflows/maven-build.yml@master
     with:
       INTEGRATION_TESTS_ENABLED: false
+      JDK_VERSION: 17
 

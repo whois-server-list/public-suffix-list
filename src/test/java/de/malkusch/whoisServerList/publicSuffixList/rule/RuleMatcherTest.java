@@ -1,67 +1,52 @@
 package de.malkusch.whoisServerList.publicSuffixList.rule;
 
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
 
-import de.malkusch.whoisServerList.publicSuffixList.rule.RuleMatcher;
-
-@RunWith(Parameterized.class)
 public class RuleMatcherTest {
 
-    @Parameter(0)
-    public String rule;
+    public static Collection<Arguments> CASES() {
+        ArrayList<Arguments> cases = new ArrayList<>();
 
-    @Parameter(1)
-    public String domain;
+        cases.add(Arguments.of("net", "", null));
+        cases.add(Arguments.of("net", "com", null));
+        cases.add(Arguments.of("net", "x.com", null));
+        cases.add(Arguments.of("a.net", "net", null));
+        cases.add(Arguments.of("a.net", "x.net", null));
+        cases.add(Arguments.of("a.net", "aa.net", null));
+        cases.add(Arguments.of("a.net", "a..net", null));
+        cases.add(Arguments.of("*.net", "net", null));
+        cases.add(Arguments.of("*.net", "x.com", null));
+        cases.add(Arguments.of("*.net", "..com", null));
+        cases.add(Arguments.of("*.net", "x..com", null));
+        cases.add(Arguments.of("a.*.net", "aa.x.net", null));
 
-    @Parameter(2)
-    public String match;
-
-    @Parameters
-    public static Collection<String[]> provideCases() {
-        ArrayList<String[]> cases = new ArrayList<>();
-
-        cases.add(new String[]{"net", null, null});
-        cases.add(new String[]{"net", "", null});
-        cases.add(new String[]{"net", "com", null});
-        cases.add(new String[]{"net", "x.com", null});
-        cases.add(new String[]{"a.net", "net", null});
-        cases.add(new String[]{"a.net", "x.net", null});
-        cases.add(new String[]{"a.net", "aa.net", null});
-        cases.add(new String[]{"a.net", "a..net", null});
-        cases.add(new String[]{"*.net", "net", null});
-        cases.add(new String[]{"*.net", "x.com", null});
-        cases.add(new String[]{"*.net", "..com", null});
-        cases.add(new String[]{"*.net", "x..com", null});
-        cases.add(new String[]{"a.*.net", "aa.x.net", null});
-
-        cases.add(new String[]{"net", "Net", "Net"});
-        cases.add(new String[]{"net", "net", "net"});
-        cases.add(new String[]{"net", "x.net", "net"});
-        cases.add(new String[]{"a.net", "a.net", "a.net"});
-        cases.add(new String[]{"a.net", "x.a.net", "a.net"});
-        cases.add(new String[]{"*.net", "x.net", "x.net"});
-        cases.add(new String[]{"*.net", "x.x.net", "x.net"});
-        cases.add(new String[]{"a.*.net", "a.x.net", "a.x.net"});
-        cases.add(new String[]{"a.*.net", "x.a.x.net", "a.x.net"});
-        cases.add(new String[]{"a.*.b.*.c", "a.x.b.x.c", "a.x.b.x.c"});
-        cases.add(new String[]{"a.*.b.*.c", "x.a.x.b.x.c", "a.x.b.x.c"});
+        cases.add(Arguments.of("net", "Net", "Net"));
+        cases.add(Arguments.of("net", "net", "net"));
+        cases.add(Arguments.of("net", "x.net", "net"));
+        cases.add(Arguments.of("a.net", "a.net", "a.net"));
+        cases.add(Arguments.of("a.net", "x.a.net", "a.net"));
+        cases.add(Arguments.of("*.net", "x.net", "x.net"));
+        cases.add(Arguments.of("*.net", "x.x.net", "x.net"));
+        cases.add(Arguments.of("a.*.net", "a.x.net", "a.x.net"));
+        cases.add(Arguments.of("a.*.net", "x.a.x.net", "a.x.net"));
+        cases.add(Arguments.of("a.*.b.*.c", "a.x.b.x.c", "a.x.b.x.c"));
+        cases.add(Arguments.of("a.*.b.*.c", "x.a.x.b.x.c", "a.x.b.x.c"));
 
         return cases;
     }
 
-    @Test
-    public void testMatch() {
+    @ParameterizedTest
+    @MethodSource("CASES")
+    public void testMatch(String rule, String domain, String match) {
         RuleMatcher matcher = new RuleMatcher(rule);
         assertEquals(match, matcher.match(domain));
     }
-
 }

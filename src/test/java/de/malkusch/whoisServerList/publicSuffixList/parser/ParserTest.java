@@ -1,30 +1,23 @@
 package de.malkusch.whoisServerList.publicSuffixList.parser;
 
-import static org.junit.Assert.*;
+import de.malkusch.whoisServerList.publicSuffixList.PublicSuffixList;
+import de.malkusch.whoisServerList.publicSuffixList.PublicSuffixListFactory;
+import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-import de.malkusch.whoisServerList.publicSuffixList.PublicSuffixList;
-import de.malkusch.whoisServerList.publicSuffixList.PublicSuffixListFactory;
-import de.malkusch.whoisServerList.publicSuffixList.parser.Parser;
-import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
 
 public class ParserTest {
 
-    private Parser parser;
-
-    @Before
-    public void setParser() {
-        parser = new Parser();
-    }
-
     @Test
     public void testParse() throws IOException {
+        Parser parser = new Parser();
         String[] expected = {"ac", "com.ac", "edu.ac", "*.er", "hk", "教育.hk", "敎育.hk", "政府.hk",
                 "za.net", "za.org"};
 
@@ -39,6 +32,8 @@ public class ParserTest {
 
     @Test
     public void testParseLine() {
+        Parser parser = new Parser();
+
         assertNull(parser.parseLine(null));
         assertNull(parser.parseLine(""));
         assertNull(parser.parseLine("\n"));
@@ -61,5 +56,4 @@ public class ParserTest {
         assertEquals("*.de", parser.parseLine("*.de").toString());
         assertEquals("!de", parser.parseLine("!de").toString());
     }
-
 }

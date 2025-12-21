@@ -1,13 +1,11 @@
 package de.malkusch.whoisServerList.publicSuffixList;
 
-import static org.junit.Assert.*;
+
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
-import org.junit.Test;
-
-import de.malkusch.whoisServerList.publicSuffixList.PublicSuffixList;
-import de.malkusch.whoisServerList.publicSuffixList.PublicSuffixListFactory;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ExampleTest {
 
@@ -35,5 +33,4 @@ public class ExampleTest {
         assertEquals("食狮.com.cn", suffixList.getRegistrableDomain("食狮.com.cn"));
         assertEquals("xn--85x722f.com.cn", suffixList.getRegistrableDomain("xn--85x722f.com.cn"));
     }
-
 }

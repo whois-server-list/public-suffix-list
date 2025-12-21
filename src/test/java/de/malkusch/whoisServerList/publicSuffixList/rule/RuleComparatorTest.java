@@ -1,43 +1,31 @@
 package de.malkusch.whoisServerList.publicSuffixList.rule;
 
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
 
-import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
-import de.malkusch.whoisServerList.publicSuffixList.rule.RuleComparator;
-import de.malkusch.whoisServerList.publicSuffixList.rule.RuleFactory;
-
-@RunWith(Parameterized.class)
 public class RuleComparatorTest {
 
-    @Parameter(0)
-    public String prevailingRule;
-
-    @Parameter(1)
-    public String rule;
-
-    @Parameters
-    public static Collection<String[]> getCases() {
-        Collection<String[]> cases = new ArrayList<>();
-        cases.add(new String[] {"a.net", "net"});
-        cases.add(new String[] {"a.b.net", "net"});
-        cases.add(new String[] {"a.b.net", "a.net"});
-        cases.add(new String[] {"!net", "a.net"});
-        cases.add(new String[] {"!net", "a.b.net"});
+    public static Collection<Arguments> RULES() {
+        Collection<Arguments> cases = new ArrayList<>();
+        cases.add(Arguments.of("a.net", "net"));
+        cases.add(Arguments.of("a.b.net", "net"));
+        cases.add(Arguments.of("a.b.net", "a.net"));
+        cases.add(Arguments.of("!net", "a.net"));
+        cases.add(Arguments.of("!net", "a.b.net"));
         return cases;
     }
 
-    @Test
-    public void testCompare() {
+    @ParameterizedTest
+    @MethodSource("RULES")
+    public void testCompare(String prevailingRule, String rule) {
         Comparator<Rule> comparator = new RuleComparator();
 
         RuleFactory factory = new RuleFactory();
@@ -49,5 +37,4 @@ public class RuleComparatorTest {
         assertEquals(0, comparator.compare(rule1, rule1));
         assertEquals(0, comparator.compare(rule2, rule2));
     }
-
 }

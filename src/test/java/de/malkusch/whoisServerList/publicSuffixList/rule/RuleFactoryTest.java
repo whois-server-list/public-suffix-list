@@ -1,40 +1,31 @@
 package de.malkusch.whoisServerList.publicSuffixList.rule;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
-import de.malkusch.whoisServerList.publicSuffixList.rule.RuleFactory;
 
-@RunWith(Parameterized.class)
 public class RuleFactoryTest {
 
-    @Parameter
-    public Rule expected;
+    static public List<Rule> RULES() {
+        List<Rule> cases = new ArrayList<>();
 
-    @Parameters
-    static public List<Rule[]> provideTestCases() {
-        List<Rule[]> cases = new ArrayList<>();
+        cases.add(new Rule("de"));
+        cases.add(new Rule("co.uk"));
+        cases.add(new Rule("*.ck"));
 
-        cases.add(new Rule[]{new Rule("de")});
-        cases.add(new Rule[]{new Rule("co.uk")});
-        cases.add(new Rule[]{new Rule("*.ck")});
-
-        cases.add(new Rule[]{new Rule("www.ck", true)});
+        cases.add(new Rule("www.ck", true));
 
         return cases;
     }
 
-    @Test
-    public void testBuildRule() {
+    @ParameterizedTest
+    @MethodSource("RULES")
+    public void testBuildRule(Rule expected) {
         RuleFactory factory = new RuleFactory();
         assertEquals(expected, factory.build(expected.toString()));
     }

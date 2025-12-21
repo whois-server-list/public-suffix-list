@@ -1,6 +1,9 @@
 package de.malkusch.whoisServerList.publicSuffixList.index;
 
-import static org.junit.Assert.assertEquals;
+import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
+import de.malkusch.whoisServerList.publicSuffixList.test.util.TestUtil;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -8,30 +11,18 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import de.malkusch.whoisServerList.publicSuffixList.index.Index;
-import de.malkusch.whoisServerList.publicSuffixList.index.IndexFactory;
-import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
-import de.malkusch.whoisServerList.publicSuffixList.test.util.TestUtil;
 
-@RunWith(Parameterized.class)
 public class IndexFactoryTest {
 
-    @Parameter
-    public IndexFactory factory;
-
-    @Parameters
-    public static Collection<IndexFactory[]> getIndexes() {
+    public static Collection<IndexFactory> CASES() {
         return TestUtil.getTestIndexFactories();
     }
 
-    @Test
-    public void testBuild() throws IOException {
+    @ParameterizedTest
+    @MethodSource("CASES")
+    public void testBuild(IndexFactory factory) throws IOException {
         List<Rule> rules = TestUtil.getDefaultParsedRules();
         Set<Rule> expected = new HashSet<>(rules);
 
@@ -40,5 +31,4 @@ public class IndexFactoryTest {
 
         assertEquals(expected, actual);
     }
-
 }

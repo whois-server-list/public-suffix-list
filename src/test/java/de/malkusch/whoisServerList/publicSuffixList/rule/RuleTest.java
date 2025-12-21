@@ -1,19 +1,12 @@
 package de.malkusch.whoisServerList.publicSuffixList.rule;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
-
-import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
-import de.malkusch.whoisServerList.publicSuffixList.rule.RuleFactory;
 
 public class RuleTest {
 
@@ -49,36 +42,14 @@ public class RuleTest {
         }
     }
 
-    @RunWith(Parameterized.class)
     static public class ToStringTest {
 
-        @Parameter
-        public String pattern;
-
-        @Parameters
-        static public Iterable<String[]> providePatterns() {
-            List<String[]> cases = new ArrayList<>();
-            cases.add(new String[] {"de"});
-            cases.add(new String[] {"*.de"});
-            cases.add(new String[] {"!*.de"});
-            cases.add(new String[] {"!test.de"});
-            cases.add(new String[] {"!test.*.de"});
-            return cases;
-        }
-
-        private Rule rule;
-
-        @Before
-        public void setRule() {
+        @ParameterizedTest
+        @ValueSource(strings = {"de", "*.de", "!*.de", "!test.de", "!test.*.de"})
+        public void testToString(String pattern) {
             RuleFactory factory = new RuleFactory();
-            rule = factory.build(pattern);
-        }
-
-        @Test
-        public void testToString() {
+            Rule rule = factory.build(pattern);
             assertEquals(pattern, rule.toString());
         }
-
     }
-
 }

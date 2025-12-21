@@ -1,10 +1,9 @@
 package de.malkusch.whoisServerList.publicSuffixList.util;
 
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import de.malkusch.whoisServerList.publicSuffixList.util.PunycodeAutoDecoder;
 
 public class PunycodeCodecTest {
 
@@ -36,5 +35,4 @@ public class PunycodeCodecTest {
             assertEquals(domain, decoder.recode(domain));
         }
     }
-
 }
