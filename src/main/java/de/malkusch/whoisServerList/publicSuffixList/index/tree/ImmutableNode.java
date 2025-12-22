@@ -1,25 +1,17 @@
 package de.malkusch.whoisServerList.publicSuffixList.index.tree;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.Map;
-
-import javax.annotation.concurrent.Immutable;
-
 import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
+
+import java.util.*;
 
 /**
  * Immutable tree Node.
- *
+ * <p>
  * The search tree uses immutable nodes during search operation.
  *
  * @author markus@malkusch.de
  * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
  */
-@Immutable
 final class ImmutableNode extends Node<ImmutableNode> {
 
     /**
@@ -30,12 +22,12 @@ final class ImmutableNode extends Node<ImmutableNode> {
     /**
      * Initializes the node.
      *
-     * @param label     the domain label, may be null for the root
-     * @param children  the children, not null
-     * @param rule      the rule, may be null
+     * @param label    the domain label, may be null for the root
+     * @param children the children, not null
+     * @param rule     the rule, may be null
      */
     ImmutableNode(final String label,
-            final Map<String, ImmutableNode> children, final Rule rule) {
+                  final Map<String, ImmutableNode> children, final Rule rule) {
         super(label, Collections.unmodifiableMap(children));
 
         this.rule = rule;
@@ -49,7 +41,7 @@ final class ImmutableNode extends Node<ImmutableNode> {
     /**
      * Finds a list of nodes which match the domain.
      *
-     * @param domain  the domain name, may be null
+     * @param domain the domain name, may be null
      * @return the nodes, not null
      */
     Collection<ImmutableNode> findNodes(final String domain) {
@@ -59,7 +51,7 @@ final class ImmutableNode extends Node<ImmutableNode> {
     /**
      * Finds a list of nodes which match the domain labels.
      *
-     * @param labels  the domain labels, not null
+     * @param labels the domain labels, not null
      * @return the nodes, not null
      */
     Collection<ImmutableNode> findNodes(final Deque<String> labels) {

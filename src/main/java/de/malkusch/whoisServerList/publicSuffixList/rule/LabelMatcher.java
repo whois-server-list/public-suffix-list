@@ -1,20 +1,17 @@
 package de.malkusch.whoisServerList.publicSuffixList.rule;
 
-import javax.annotation.concurrent.Immutable;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * The label matcher.
- *
+ * <p>
  * The matcher is case insensitive.
  *
  * @author markus@malkusch.de
  * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
  */
-@Immutable
 final class LabelMatcher {
 
     /**
@@ -25,7 +22,7 @@ final class LabelMatcher {
     /**
      * Sets the label pattern.
      *
-     * @param pattern  the label pattern, not null
+     * @param pattern the label pattern, not null
      */
     LabelMatcher(final String pattern) {
         this.pattern = pattern;
@@ -33,10 +30,10 @@ final class LabelMatcher {
 
     /**
      * Matches a label.
-     *
+     * <p>
      * Empty labels or null never match. Matching is case insensitive.
      *
-     * @param label  the label, may be null
+     * @param label the label, may be null
      * @return {@code true} if the label matches
      */
     boolean isMatch(final String label) {

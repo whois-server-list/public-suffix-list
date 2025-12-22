@@ -2,22 +2,19 @@ package de.malkusch.whoisServerList.publicSuffixList.util;
 
 import java.net.IDN;
 
-import javax.annotation.concurrent.NotThreadSafe;
-
 /**
  * Automatic Punycode Codec.
- *
+ * <p>
  * This codec remembers at {@link PunycodeAutoDecoder#decode(String)}
  * whether the input was encoded or not.
  * The {@link PunycodeAutoDecoder#recode(String)} method will return
  * the same format as the original input was.
- *
+ * <p>
  * This object has a state.
  *
  * @author markus@malkusch.de
  * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
  */
-@NotThreadSafe
 public final class PunycodeAutoDecoder {
 
     /**
@@ -27,13 +24,13 @@ public final class PunycodeAutoDecoder {
 
     /**
      * Decodes a domain name into UTF-8 if it is in Punycode ASCII.
-     *
+     * <p>
      * If the domain name was already UTF-8 nothing will happen. This
      * method saves the original format (Punycode or UTF-8) in
      * {@link #decoded}. {@link #recode(String)} can return the string
      * in the saved format.
      *
-     * @param domain  the domain name, may be null
+     * @param domain the domain name, may be null
      * @return the UTF-8 domain name
      */
     public String decode(final String domain) {
@@ -48,11 +45,11 @@ public final class PunycodeAutoDecoder {
 
     /**
      * Returns the UTF-8 domain name in the original format.
-     *
+     * <p>
      * The original format is whether Punycode ASCII or UTF-8. The format
      * is determined in {@link #decode(String)}.
      *
-     * @param domain  the UTF-8 domain name, not null
+     * @param domain the UTF-8 domain name, not null
      * @return the domain name in the original format, not null
      */
     public String recode(final String domain) {
@@ -61,7 +58,7 @@ public final class PunycodeAutoDecoder {
 
     /**
      * Whether the original format was Punnycode ASCII.
-     *
+     * <p>
      * The original format is determined in {@link #decode(String)}.
      *
      * @return {@code true} if the original format was Punnycode ASCII

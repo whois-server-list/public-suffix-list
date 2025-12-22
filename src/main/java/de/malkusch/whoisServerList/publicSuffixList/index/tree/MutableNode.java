@@ -1,26 +1,23 @@
 package de.malkusch.whoisServerList.publicSuffixList.index.tree;
 
-import java.util.Deque;
-
-import javax.annotation.concurrent.NotThreadSafe;
-
 import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
+
+import java.util.Deque;
 
 /**
  * Mutable tree Node.
- *
+ * <p>
  * The tree is mutable during construction
  * in {@link TreeIndexFactory#build(java.util.List)}.
  *
  * @author markus@malkusch.de
  * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
  */
-@NotThreadSafe
 final class MutableNode extends Node<MutableNode> {
 
     /**
      * Rule, may be null.
-     *
+     * <p>
      * The rule is set only once during building the tree.
      */
     private Rule rule;
@@ -28,7 +25,7 @@ final class MutableNode extends Node<MutableNode> {
     /**
      * Sets the domain label.
      *
-     * @param label  the domain label, may be null for the root
+     * @param label the domain label, may be null for the root
      */
     MutableNode(final String label) {
         super(label);
@@ -37,7 +34,7 @@ final class MutableNode extends Node<MutableNode> {
     /**
      * Sets the rule.
      *
-     * @param rule  the rule, may be null
+     * @param rule the rule, may be null
      */
     void setRule(final Rule rule) {
         this.rule = rule;
@@ -54,10 +51,10 @@ final class MutableNode extends Node<MutableNode> {
 
     /**
      * Returns the node for a rule pattern.
-     *
+     * <p>
      * If the node and its path doesn't exist yet, it will be created.
      *
-     * @param rulePattern  the rule pattern, not null
+     * @param rulePattern the rule pattern, not null
      * @return the node, not null
      */
     MutableNode getOrCreateDescendant(final String rulePattern) {
@@ -66,10 +63,10 @@ final class MutableNode extends Node<MutableNode> {
 
     /**
      * Returns the node for rule labels.
-     *
+     * <p>
      * If the node and its path doesn't exist yet, it will be created.
      *
-     * @param labels  the rule labels, not null
+     * @param labels the rule labels, not null
      * @return the node, not null
      */
     private MutableNode getOrCreateDescendant(final Deque<String> labels) {
@@ -83,10 +80,10 @@ final class MutableNode extends Node<MutableNode> {
 
     /**
      * Returns the child for a label.
-     *
+     * <p>
      * If the child doesn't exist yet, it will be created.
      *
-     * @param childLabel  the rule label, not null
+     * @param childLabel the rule label, not null
      * @return the child, not null
      */
     MutableNode getOrCreateChild(final String childLabel) {

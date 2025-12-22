@@ -1,10 +1,8 @@
 package de.malkusch.whoisServerList.publicSuffixList.util;
 
-import java.util.Collection;
-
-import javax.annotation.concurrent.ThreadSafe;
-
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.Collection;
 
 /**
  * Domain utility class.
@@ -12,7 +10,6 @@ import org.apache.commons.lang3.StringUtils;
  * @author markus@malkusch.de
  * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
  */
-@ThreadSafe
 public final class DomainUtil {
 
     /**
@@ -23,10 +20,10 @@ public final class DomainUtil {
 
     /**
      * Splits a domain or pattern into its labels.
-     *
+     * <p>
      * Splitting is done at ".".
      *
-     * @param domain  the domain name or rule pattern, null returns null
+     * @param domain the domain name or rule pattern, null returns null
      * @return the domain or rule label, or null
      */
     public static String[] splitLabels(final String domain) {
@@ -43,10 +40,10 @@ public final class DomainUtil {
 
     /**
      * Joins labels to a domain name or rule pattern.
-     *
+     * <p>
      * Joining is done with ".".
      *
-     * @param labels  the domain or rule labels, not null
+     * @param labels the domain or rule labels, not null
      * @return the domain name or rule pattern
      */
     public static String joinLabels(final Collection<String> labels) {
@@ -55,10 +52,10 @@ public final class DomainUtil {
 
     /**
      * Joins labels to a domain name or rule pattern.
-     *
+     * <p>
      * Joining is done with ".".
      *
-     * @param labels  the domain or rule labels, not null
+     * @param labels the domain or rule labels, not null
      * @return the domain name or rule pattern
      */
     public static String joinLabels(final String[] labels) {

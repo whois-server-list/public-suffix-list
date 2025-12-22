@@ -1,22 +1,18 @@
 package de.malkusch.whoisServerList.publicSuffixList.rule;
 
-import javax.annotation.concurrent.Immutable;
-
+import de.malkusch.whoisServerList.publicSuffixList.util.DomainUtil;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import de.malkusch.whoisServerList.publicSuffixList.util.DomainUtil;
-
 /**
  * The rule matcher.
- *
+ * <p>
  * The matcher is case insensitive.
  *
  * @author markus@malkusch.de
  * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
  */
-@Immutable
 final class RuleMatcher {
 
     /**
@@ -26,10 +22,10 @@ final class RuleMatcher {
 
     /**
      * Sets the rule labels.
-     *
+     * <p>
      * The labels are stored as a reversed copy in {@link #reversedLabels}.
      *
-     * @param labels  the rule labels, not null
+     * @param labels the rule labels, not null
      */
     RuleMatcher(final String[] labels) {
         this.reversedLabels = labels.clone();
@@ -38,10 +34,10 @@ final class RuleMatcher {
 
     /**
      * Sets the rule labels.
-     *
+     * <p>
      * The labels are stored as a reversed copy in {@link #reversedLabels}.
      *
-     * @param pattern  the rule pattern, not null
+     * @param pattern the rule pattern, not null
      */
     RuleMatcher(final String pattern) {
         this(DomainUtil.splitLabels(pattern));
@@ -49,10 +45,10 @@ final class RuleMatcher {
 
     /**
      * Returns the matched public suffix.
-     *
+     * <p>
      * Matching is case insensitive.
      *
-     * @param domain  the domain name, may be null
+     * @param domain the domain name, may be null
      * @return the matched public suffix or null
      */
     String match(final String domain) {

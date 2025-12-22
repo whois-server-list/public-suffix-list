@@ -1,14 +1,11 @@
 package de.malkusch.whoisServerList.publicSuffixList.rule;
 
-import java.util.Arrays;
-
-import javax.annotation.concurrent.Immutable;
-
+import de.malkusch.whoisServerList.publicSuffixList.index.Index;
+import de.malkusch.whoisServerList.publicSuffixList.util.DomainUtil;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import de.malkusch.whoisServerList.publicSuffixList.index.Index;
-import de.malkusch.whoisServerList.publicSuffixList.util.DomainUtil;
+import java.util.Arrays;
 
 /**
  * The Public Suffix rule.
@@ -16,12 +13,11 @@ import de.malkusch.whoisServerList.publicSuffixList.util.DomainUtil;
  * @author markus@malkusch.de
  * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
  */
-@Immutable
 public final class Rule {
 
     /**
      * The exception token.
-     *
+     * <p>
      * An exception rule begins with "!".
      */
     public static final char EXCEPTION_TOKEN = '!';
@@ -33,7 +29,7 @@ public final class Rule {
 
     /**
      * The default rule ("*").
-     *
+     * <p>
      * This rule applies if no other rule did match.
      */
     public static final Rule DEFAULT = new Rule(WILDCARD);
@@ -50,10 +46,10 @@ public final class Rule {
 
     /**
      * Initializes a normal rule.
-     *
+     * <p>
      * The pattern has no more exception token!
      *
-     * @param pattern  the rule matching pattern, not null
+     * @param pattern the rule matching pattern, not null
      */
     public Rule(final String pattern) {
         this(pattern, false);
@@ -61,11 +57,11 @@ public final class Rule {
 
     /**
      * Initializes a rule.
-     *
+     * <p>
      * The pattern has no more exception token!
      *
-     * @param pattern        the rule matching pattern, not null
-     * @param exceptionRule  whether this is an exception rule
+     * @param pattern       the rule matching pattern, not null
+     * @param exceptionRule whether this is an exception rule
      */
     public Rule(final String pattern, final boolean exceptionRule) {
         this.matcher = new RuleMatcher(pattern);
@@ -74,11 +70,10 @@ public final class Rule {
 
     /**
      * Returns the label count of this rule.
-     *
+     * <p>
      * The label count is used for determining the prevailing rule.
      *
      * @return the label count
-     *
      * @see RuleComparator
      * @see Index#findRule(String)
      */
@@ -88,7 +83,7 @@ public final class Rule {
 
     /**
      * Returns the rule pattern.
-     *
+     * <p>
      * The exception token is not included in the pattern!
      *
      * @return the rule pattern, not null.
@@ -115,7 +110,7 @@ public final class Rule {
 
     /**
      * Returns if this rule is an exception rule.
-     *
+     * <p>
      * Exception rules are always prevailing rules.
      *
      * @return {@code true} if this is an exception rule
@@ -127,7 +122,7 @@ public final class Rule {
     /**
      * Returns the matched public suffix of a domain.
      *
-     * @param domain  the domain name, may be null
+     * @param domain the domain name, may be null
      * @return the public suffix for the domain name, or null if no match
      */
     public String match(final String domain) {
@@ -146,7 +141,7 @@ public final class Rule {
         } else {
             String[] labels = DomainUtil.splitLabels(match);
             String[] reducedLabels
-                = Arrays.copyOfRange(labels, 1, labels.length);
+                    = Arrays.copyOfRange(labels, 1, labels.length);
 
             return DomainUtil.joinLabels(reducedLabels);
 

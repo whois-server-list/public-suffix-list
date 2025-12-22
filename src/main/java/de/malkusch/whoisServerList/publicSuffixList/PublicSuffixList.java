@@ -1,38 +1,33 @@
 package de.malkusch.whoisServerList.publicSuffixList;
 
+import de.malkusch.whoisServerList.publicSuffixList.index.Index;
+import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
+import de.malkusch.whoisServerList.publicSuffixList.util.DomainUtil;
+import de.malkusch.whoisServerList.publicSuffixList.util.PunycodeAutoDecoder;
+import org.apache.commons.lang3.StringUtils;
+
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.annotation.concurrent.Immutable;
-
-import org.apache.commons.lang3.StringUtils;
-
-import de.malkusch.whoisServerList.publicSuffixList.index.Index;
-import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
-import de.malkusch.whoisServerList.publicSuffixList.util.DomainUtil;
-import de.malkusch.whoisServerList.publicSuffixList.util.PunycodeAutoDecoder;
-
 /**
  * API for the Public Suffix List.
- *
+ * <p>
  * Use {@link PublicSuffixListFactory} for building this api.
- *
+ * <p>
  * You can use the API's methods with UTF-8 domain names or Punycode
  * encoded ASCII domain names. The API will return the results in
  * the same format as the input was. I.e. if you use an UTF-8 string
  * the result will be an UTF-8 String as well. Same for Punycode.
- *
+ * <p>
  * The API is case insensitive.
  *
  * @author markus@malkusch.de
- *
  * @see PublicSuffixListFactory
  * @see <a href="https://publicsuffix.org/">https://publicsuffix.org/</a>
  * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
  */
-@Immutable
 public final class PublicSuffixList {
 
     /**
@@ -53,14 +48,13 @@ public final class PublicSuffixList {
     /**
      * Initializes the Public List API.
      *
-     * @param index    the rule index
-     * @param url      the Public Suffix List url
-     * @param charset  the character encoding of the list
-     *
+     * @param index   the rule index
+     * @param url     the Public Suffix List url
+     * @param charset the character encoding of the list
      * @see PublicSuffixListFactory#build()
      */
     PublicSuffixList(final Index index, final URL url,
-            final Charset charset) {
+                     final Charset charset) {
 
         this.index = index;
         this.url = url;
@@ -69,15 +63,15 @@ public final class PublicSuffixList {
 
     /**
      * Gets the registrable domain.
-     *
+     * <p>
      * E.g. "www.example.net" and "example.net" will return "example.net".
      * Null, an empty string or domains with a leading dot will return null.
-     *
+     * <p>
      * This method is case insensitive.
      *
-     * @param domain  the domain name, null returns null
+     * @param domain the domain name, null returns null
      * @return the registrable domain,
-     *         null if the domain is not registrable at all
+     * null if the domain is not registrable at all
      */
     public String getRegistrableDomain(final String domain) {
         if (StringUtils.isEmpty(domain)) {
@@ -116,12 +110,12 @@ public final class PublicSuffixList {
 
     /**
      * Returns whether a domain is registrable.
-     *
+     * <p>
      * E.g. example.net is registrable, "www.example.net" and "net" are not.
-     *
+     * <p>
      * This method is case insensitive.
      *
-     * @param domain  the domain name, not null
+     * @param domain the domain name, not null
      * @return {@code true} if the domain is registrable
      */
     public boolean isRegistrable(final String domain) {
@@ -134,13 +128,13 @@ public final class PublicSuffixList {
 
     /**
      * Returns the public suffix from a domain.
-     *
+     * <p>
      * If the domain is already a public suffix, it will be returned unchanged.
      * E.g. "www.example.net" will return "net".
-     *
+     * <p>
      * This method is case insensitive.
      *
-     * @param domain  the domain name
+     * @param domain the domain name
      * @return the public suffix, {@code null} if none matched
      */
     public String getPublicSuffix(final String domain) {
@@ -161,12 +155,12 @@ public final class PublicSuffixList {
 
     /**
      * Returns whether a domain is a public suffix or not.
-     *
+     * <p>
      * Example: "com" is a public suffix, "example.com" isn't.
-     *
+     * <p>
      * This method is case insensitive.
      *
-     * @param domain  the domain name, not null
+     * @param domain the domain name, not null
      * @return {@code true} if the domain is a public suffix
      */
     public boolean isPublicSuffix(final String domain) {

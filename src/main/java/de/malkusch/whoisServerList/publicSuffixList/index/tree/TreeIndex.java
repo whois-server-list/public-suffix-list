@@ -1,15 +1,12 @@
 package de.malkusch.whoisServerList.publicSuffixList.index.tree;
 
+import de.malkusch.whoisServerList.publicSuffixList.index.Index;
+import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import javax.annotation.concurrent.Immutable;
-
-import org.apache.commons.lang3.StringUtils;
-
-import de.malkusch.whoisServerList.publicSuffixList.index.Index;
-import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
 
 /**
  * Tree based implementation with O(log(n)) complexity.
@@ -17,7 +14,6 @@ import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
  * @author markus@malkusch.de
  * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
  */
-@Immutable
 final class TreeIndex extends Index {
 
     /**
@@ -28,7 +24,7 @@ final class TreeIndex extends Index {
     /**
      * Sets the tree root.
      *
-     * @param root  the root, not null
+     * @param root the root, not null
      */
     TreeIndex(final ImmutableNode root) {
         this.root = root;
@@ -36,10 +32,10 @@ final class TreeIndex extends Index {
 
     /**
      * Returns the canonical label.
-     *
+     * <p>
      * I.e. "DE" equals "de".
      *
-     * @param label  the label in any case, null returns null
+     * @param label the label in any case, null returns null
      * @return the canonical label, or null
      */
     static String getCanonicalLabel(final String label) {

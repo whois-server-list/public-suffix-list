@@ -1,24 +1,20 @@
 package de.malkusch.whoisServerList.publicSuffixList.index.tree;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.concurrent.Immutable;
-
 import de.malkusch.whoisServerList.publicSuffixList.index.Index;
 import de.malkusch.whoisServerList.publicSuffixList.index.IndexFactory;
 import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Builds a tree based implementation with O(log(n)) complexity.
  *
  * @author markus@malkusch.de
- *
  * @see TreeIndex
  * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
  */
-@Immutable
 public final class TreeIndexFactory implements IndexFactory {
 
     @Override
@@ -35,7 +31,7 @@ public final class TreeIndexFactory implements IndexFactory {
     /**
      * Converts a {@code MutableNode} into an {@code ImmutableNode}.
      *
-     * @param node  the mutable node, not null
+     * @param node the mutable node, not null
      * @return the converted immutable node, not null
      */
     private ImmutableNode convert(final MutableNode node) {

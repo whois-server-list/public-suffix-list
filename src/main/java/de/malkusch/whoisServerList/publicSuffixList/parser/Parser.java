@@ -1,5 +1,8 @@
 package de.malkusch.whoisServerList.publicSuffixList.parser;
 
+import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
+import de.malkusch.whoisServerList.publicSuffixList.rule.RuleFactory;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,21 +13,15 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.annotation.concurrent.Immutable;
-
-import de.malkusch.whoisServerList.publicSuffixList.rule.Rule;
-import de.malkusch.whoisServerList.publicSuffixList.rule.RuleFactory;
-
 /**
  * The parser for the Public Suffix List file.
- *
+ * <p>
  * The parser takes the Public Suffix List file as input and returns a
  * {@link Rule} list.
  *
  * @author markus@malkusch.de
  * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
  */
-@Immutable
 public final class Parser {
 
     /**
@@ -50,11 +47,9 @@ public final class Parser {
     /**
      * Parses all rules from a stream.
      *
-     * @param stream   the stream with lines of rules, not null
-     * @param charset  the character encoding of that stream, not null
-     *
+     * @param stream  the stream with lines of rules, not null
+     * @param charset the character encoding of that stream, not null
      * @return the rule list, not null
-     *
      * @throws IOException If reading from the stream fails
      */
     public List<Rule> parse(final InputStream stream, final Charset charset)
@@ -62,7 +57,7 @@ public final class Parser {
 
         List<Rule> rules = new ArrayList<>();
         BufferedReader reader
-            = new BufferedReader(new InputStreamReader(stream, charset));
+                = new BufferedReader(new InputStreamReader(stream, charset));
 
         String line;
         while ((line = reader.readLine()) != null) {
@@ -80,7 +75,7 @@ public final class Parser {
     /**
      * Parses a line for a rule.
      *
-     * @param line  the line with one rule, may be null
+     * @param line the line with one rule, may be null
      * @return the parsed {@code Rule}, or null if no rule was found
      */
     public Rule parseLine(final String line) {

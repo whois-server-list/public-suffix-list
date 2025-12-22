@@ -3,21 +3,17 @@ package de.malkusch.whoisServerList.publicSuffixList.rule;
 import java.io.Serializable;
 import java.util.Comparator;
 
-import javax.annotation.concurrent.Immutable;
-
 /**
  * Orders prevailing rules higher.
- *
+ * <p>
  * The rule with the highest {@link Rule#getLabelCount()} is the
  * prevailing rule. An exception rule is always the prevailing rule.
  *
  * @author markus@malkusch.de
- *
  * @see Rule#isExceptionRule()
  * @see Rule#getLabelCount()
  * @see <a href="bitcoin:1335STSwu9hST4vcMRppEPgENMHD2r1REK">Donations</a>
  */
-@Immutable
 public final class RuleComparator implements Comparator<Rule>, Serializable {
 
     /**
@@ -32,7 +28,7 @@ public final class RuleComparator implements Comparator<Rule>, Serializable {
         if (rule1.isExceptionRule() && rule2.isExceptionRule()) {
             if (!rule1.equals(rule2)) {
                 throw new IllegalArgumentException(
-                    "You can't compare two exception rules.");
+                        "You can't compare two exception rules.");
 
             }
             return 0;
