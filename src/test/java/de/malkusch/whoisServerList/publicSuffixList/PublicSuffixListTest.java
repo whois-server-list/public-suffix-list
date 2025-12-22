@@ -96,6 +96,9 @@ public class PublicSuffixListTest {
         assertEquals("uk", psl.getPublicSuffix("example.uk"));
         assertEquals("test.sch.uk", psl.getPublicSuffix("example.test.sch.uk"));
         assertEquals("fallback", psl.getPublicSuffix("example.fallback"));
+        assertEquals("公司.cn", psl.getPublicSuffix("example.公司.cn"));
+        assertEquals("公司.cn", psl.getPublicSuffix("食狮.公司.cn"));
+        assertEquals("xn--55qx5d.cn", psl.getPublicSuffix("example.xn--85x722f.xn--55qx5d.cn"));
     }
 
     @ParameterizedTest
@@ -105,10 +108,13 @@ public class PublicSuffixListTest {
         assertTrue(psl.isPublicSuffix("de"));
         assertTrue(psl.isPublicSuffix("co.uk"));
         assertTrue(psl.isPublicSuffix("教育.hk"));
+        assertTrue(psl.isPublicSuffix("xn--55qx5d.cn"));
         assertTrue(psl.isPublicSuffix("uk"));
         assertTrue(psl.isPublicSuffix("test.sch.uk"));
 
         assertFalse(psl.isPublicSuffix("example.net"));
         assertFalse(psl.isPublicSuffix("markus.malkusch.de"));
+        assertFalse(psl.isPublicSuffix("www.xn--55qx5d.cn"));
+        assertFalse(psl.isPublicSuffix("www.公司.cn"));
     }
 }

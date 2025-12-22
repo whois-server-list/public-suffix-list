@@ -143,14 +143,14 @@ public final class PublicSuffixList {
 
         }
         PunycodeAutoDecoder punycode = new PunycodeAutoDecoder();
-        String decodedDomain = punycode.recode(domain);
+        String decodedDomain = punycode.decode(domain);
 
         Rule rule = index.findRule(decodedDomain);
         if (rule == null) {
             return null;
 
         }
-        return punycode.decode(rule.match(decodedDomain));
+        return punycode.recode(rule.match(decodedDomain));
     }
 
     /**
