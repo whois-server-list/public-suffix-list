@@ -14,7 +14,7 @@ This package is available in Maven central:
 <dependency>
   <groupId>de.malkusch.whois-server-list</groupId>
   <artifactId>public-suffix-list</artifactId>
-  <version>2.2.3</version>
+  <version>2.2.4</version>
 </dependency>
 ```
 
