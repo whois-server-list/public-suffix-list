@@ -100,9 +100,9 @@ You can integrate the download of the latest list in your maven build process:
 <build>
     <plugins>
         <plugin>
-            <groupId>com.googlecode.maven-download-plugin</groupId>
+            <groupId>io.github.download-maven-plugin</groupId>
             <artifactId>download-maven-plugin</artifactId>
-            <version>1.13.0</version>
+            <version>2.0.0</version>
             <executions>
                 <execution>
                     <id>package-psl</id>
